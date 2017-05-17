@@ -1,0 +1,58 @@
+<resources>
+    <string name="app_name">Beer Is Good</string>
+    <string name="assignment_no">Mockup</string>
+
+    <!-- API Access -->
+    <!--
+    TODO: Before you run your application, you need a Google Maps API key.
+    To get one, follow this link, follow the directions and press "Create" at the end:
+    https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=63:7C:81:89:EF:24:7D:AF:36:18:F2:22:0A:69:55:68:60:13:F2:44%3Bcs496team1.myapplication
+    You can also add your credentials to an existing key, using these values:
+    Package name:
+    63:7C:81:89:EF:24:7D:AF:36:18:F2:22:0A:69:55:68:60:13:F2:44
+    SHA-1 certificate fingerprint:
+    63:7C:81:89:EF:24:7D:AF:36:18:F2:22:0A:69:55:68:60:13:F2:44
+    Alternatively, follow the directions here:
+    https://developers.google.com/maps/documentation/android/start#get-key
+    Once you have your key (it starts with "AIza"), replace the "google_maps_key"
+    string in this file.
+    -->
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyC1IwWngp8-Y16M7qWfuWgJtOG9EsEfLtg</string>
+
+
+    <!-- Titles -->
+    <string name="title_location">Location</string>
+    <string name="title_share">Share</string>
+    <string name="title_refresh">Refresh</string>
+    <string name="title_details">Details</string>
+    <string name="title_lastupdated">Last Updated - %1$s</string>
+    <string name="title_uptodate">Up to Date</string>
+
+
+    <!-- Error -->
+    <string name="error_generic">There was an error</string>
+    <string name="error_api_max_req">No Request Made - Loading last request</string>
+    <string name="error_JSON">Error converting JSON data</string>
+    <string name="error_datetime_invalid">Invalid DateTime given</string>
+    <string name="error_open_activity">Could not start activity</string>
+    <string name="error_intent_data">Invalid intent data (weather measurement)</string>
+
+    <!-- Subtitles -->
+    <string name="subtitle_nullresponse">Null output received from request</string>
+    <string name="subtitle_api_max_req">OpenWeatherMap has a 10min wait between API requests</string>
+
+
+    <!-- ToolTip -->
+    <string name="tt_loading">Loading</string>
+
+    <!-- Actions -->
+    <string name="action_cancel">Cancel</string>
+    <string name="action_ok">Ok</string>
+
+    <!-- Placeholders -->
+    <string name="placeholder_title">Title</string>
+    <string name="placeholder_subtitle">SubTitle</string>
+
+    <!-- Intent -->
+    <string name="intent_location">geo:%1$s,%2$s?q=%3$s,%4$s(%5$s+%6$s)</string>
+</resources>
