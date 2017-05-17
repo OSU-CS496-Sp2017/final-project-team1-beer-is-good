@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_breweries"
+        android:enabled="true"
+        android:icon="@drawable/ic_map_marker"
+        android:title="@string/title_breweries"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_beer"
+        android:enabled="true"
+        android:icon="@drawable/ic_beer"
+        android:title="@string/title_beer"
+        app:showAsAction="ifRoom" />
+</menu>

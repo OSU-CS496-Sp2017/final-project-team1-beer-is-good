@@ -71,7 +71,7 @@ public class DetailsActivity extends AppCompatActivity {
             //Set up toolbar
             setSupportActionBar(toolbar);
             toolbar.setTitle(R.string.title_details);
-            toolbar.setSubtitle(Helper.convertDateTime(this, beer.date_time_calc));
+            toolbar.setSubtitle(Helper.convertDateTime(this, beer.name));
             toolbar.inflateMenu(R.menu.submenu_share);
             toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -81,19 +81,11 @@ public class DetailsActivity extends AppCompatActivity {
             // Pull data from weatherMeasurment
             //tv_weather.setText(beer.weather.get(0).weather);
             //tv_weather_description.setText(beer.weather.get(0).weather_description);
-            tv_temp.setText(String.valueOf(beer.temp));
-            tv_temp_min.setText(String.valueOf(beer.temp_min));
-            tv_temp_max.setText(String.valueOf(beer.temp_max));
-            tv_humidity.setText(String.valueOf(beer.humidity));
-            tv_sealevel.setText(String.valueOf(beer.sea_level));
-            tv_groundlevel.setText(String.valueOf(beer.grnd_level));
-            tv_cloudiness.setText(String.valueOf(beer.cloudiness));
-            tv_windspeed.setText(String.valueOf(beer.wind_speed));
-            tv_winddir.setText(String.valueOf(beer.wind_dir));
-            tv_rainvolume.setText(String.valueOf(beer.rain_3h_volume));
+            //tv_temp.setText(String.valueOf(beer.temp));
+            //tv_temp_min.setText(String.valueOf(beer.temp_min));
 
             // Set icon
-            String iconDrawable = "ic_weather_cloudy";
+            //String iconDrawable = "ic_weather_cloudy";
             for (Map.Entry<String, String> entry : Helper.weather_icons.entrySet()){
                 //if (beer.weather.get(0).weather_icon.contains(entry.getKey())){
                 //    iconDrawable = entry.getValue();
@@ -101,7 +93,7 @@ public class DetailsActivity extends AppCompatActivity {
                 //}
             }
 
-            iv_weather_icon.setImageResource(getResources().getIdentifier(iconDrawable, "drawable", getPackageName()));
+            //iv_weather_icon.setImageResource(getResources().getIdentifier(iconDrawable, "drawable", getPackageName()));
 
         } else {
             Log.e("APP", "Could not load details activity");

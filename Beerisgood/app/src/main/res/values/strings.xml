@@ -27,6 +27,11 @@
     <string name="title_details">Details</string>
     <string name="title_lastupdated">Last Updated - %1$s</string>
     <string name="title_uptodate">Up to Date</string>
+    <string name="title_beer">Beer</string>
+    <string name="title_description">Description</string>
+    <string name="title_ibu">IBU</string>
+    <string name="title_abv">ABV</string>
+    <string name="title_breweries">Breweries</string>
 
 
     <!-- Error -->

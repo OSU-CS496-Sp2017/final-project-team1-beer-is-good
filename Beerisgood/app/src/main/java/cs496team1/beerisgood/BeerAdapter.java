@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -19,17 +20,19 @@ import java.util.Map;
 
 public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ForecastItemViewHolder> {
 
-    private List<Beer> mData;
+    private ArrayList<Beer> mData;
 
     private Context parent;
 
     public BeerAdapter(Context c){
         parent = c;
+        mData = new ArrayList<>();
     }
 
 
     public void addBeer(Beer beer){
         mData.add(beer);
+        notifyItemInserted(mData.size()-1);
     }
 
     @Override
@@ -55,64 +58,76 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ForecastItemVi
 
 
     class ForecastItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        Beer wm;
+        Beer beer;
 
         LinearLayout base;
 
-        TextView datetime;
+        ImageView icon_name;
+        ImageView icon_desc;
+        ImageView icon_ibu;
+        ImageView icon_abv;
 
-        TextView weather_desc;
-        TextView weather_desc_detail;
-        ImageView weather_icon;
+        TextView beer_name;
+        TextView beer_desc;
+        TextView beer_ibu;
+        TextView beer_abv;
 
-        TextView weather_temp;
-        TextView weather_temp_min;
-        TextView weather_temp_max;
 
 
         public ForecastItemViewHolder(View itemView) {
             super(itemView);
 
             base = (LinearLayout) itemView.findViewById(R.id.row_layout_weather_base);
-            datetime = (TextView)itemView.findViewById(R.id.row_layout_datetime);
-            weather_desc = (TextView)itemView.findViewById(R.id.row_layout_weather_title);
-            weather_desc_detail = (TextView)itemView.findViewById(R.id.row_layout_weather_subtitle);
-            weather_icon = (ImageView) itemView.findViewById(R.id.row_layout_weather_icon);
-            weather_temp = (TextView)itemView.findViewById(R.id.row_layout_temp);
-            weather_temp_min = (TextView)itemView.findViewById(R.id.row_layout_temp_subtitle_min);
-            weather_temp_max = (TextView)itemView.findViewById(R.id.row_layout_temp_subtitle_max);
+
+            icon_name = (ImageView) itemView.findViewById(R.id.row_layout_icon_name);
+            icon_desc = (ImageView)itemView.findViewById(R.id.row_layout_icon_desc);
+            icon_ibu = (ImageView)itemView.findViewById(R.id.row_layout_icon_ibu);
+            icon_abv = (ImageView)itemView.findViewById(R.id.row_layout_icon_abv);
+
+            beer_name = (TextView)itemView.findViewById(R.id.row_layout_text_name);
+            beer_desc = (TextView)itemView.findViewById(R.id.row_layout_text_desc);
+            beer_ibu = (TextView)itemView.findViewById(R.id.row_layout_text_ibu);
+            beer_abv = (TextView)itemView.findViewById(R.id.row_layout_text_abv);
 
             base.setOnClickListener(this);
         }
 
-        public void bind(Beer wm) {
-            this.wm = wm;
+        public void bind(Beer beer) {
+            this.beer = beer;
+
+
+            beer_name.setText(beer.name);
+            beer_desc.setText(beer.description);
+
+            beer_ibu.setText(String.valueOf(beer.IBU));
+            beer_abv.setText(String.valueOf(beer.ABV));
+
             //mForecastTextView.setText(forecast);
 
-            datetime.setText(Helper.convertDateTime(parent, wm.date_time_calc));
+            //datetime.setText(Helper.convertDateTime(parent, wm.date_time_calc));
 
             //weather_desc.setText(wm.weather.get(0).weather);
             //weather_desc_detail.setText(wm.weather.get(0).weather_description);
 
-            String iconDrawable = "ic_weather_cloudy";
-            for (Map.Entry<String, String> entry : Helper.weather_icons.entrySet()){
+            //String iconDrawable = "ic_weather_cloudy";
+            //for (Map.Entry<String, String> entry : Helper.weather_icons.entrySet()){
                 //if (wm.weather.get(0).weather_icon.contains(entry.getKey())){
                 //    iconDrawable = entry.getValue();
                 //    break;
                 //}
-            }
+            //}
 
-            weather_icon.setImageResource(parent.getResources().getIdentifier(iconDrawable, "drawable", parent.getPackageName()));
+            //weather_icon.setImageResource(parent.getResources().getIdentifier(iconDrawable, "drawable", parent.getPackageName()));
 
-            weather_temp.setText(String.valueOf(Math.round(wm.temp)));
-            weather_temp_min.setText(String.valueOf(Math.round(wm.temp_min)));
-            weather_temp_max.setText(String.valueOf(Math.round(wm.temp_max)));
+            //weather_temp.setText(String.valueOf(Math.round(wm.temp)));
+            //weather_temp_min.setText(String.valueOf(Math.round(wm.temp_min)));
+            //weather_temp_max.setText(String.valueOf(Math.round(wm.temp_max)));
         }
 
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(parent, DetailsActivity.class);
-            intent.putExtra("wm", wm);
+            intent.putExtra("beer", beer);
             parent.startActivity(intent);
         }
 

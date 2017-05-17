@@ -53,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_weather_title"
                 android:layout_marginEnd="5dp"
-                android:src="@drawable/ic_weather_cloudy"
+                android:src="@drawable/ic_beer"
                 android:tint="@color/turquoise" />
 
                 <TextView
@@ -156,7 +156,7 @@
                             android:scaleX="0.5"
                             android:scaleY="0.5"
                             android:tint="@color/turquoise"
-                            app:srcCompat="@drawable/ic_temperature_celsius" />
+                            app:srcCompat="@drawable/ic_beer" />
 
                     </LinearLayout>
 
@@ -254,7 +254,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
-                    android:src="@drawable/ic_pressure"
+                    android:src="@drawable/ic_beer"
                     android:tint="@color/turquoise" />
 
                 <TextView
@@ -299,7 +299,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
-                    android:src="@drawable/ic_waves"
+                    android:src="@drawable/ic_beer"
                     android:tint="@color/turquoise" />
 
                 <TextView
@@ -425,7 +425,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
-                    android:src="@drawable/ic_weather_cloudy"
+                    android:src="@drawable/ic_beer"
                     android:tint="@color/turquoise" />
 
                 <TextView
@@ -471,7 +471,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
-                    android:src="@drawable/ic_weather_windy"
+                    android:src="@drawable/ic_beer"
                     android:tint="@color/turquoise" />
 
                 <TextView
@@ -517,7 +517,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
-                    android:src="@drawable/ic_direction"
+                    android:src="@drawable/ic_beer"
                     android:tint="@color/turquoise" />
 
                 <TextView
@@ -598,7 +598,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
-                    android:src="@drawable/ic_weather_rainy"
+                    android:src="@drawable/ic_beer"
                     android:tint="@color/turquoise" />
 
                 <TextView

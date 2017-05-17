@@ -10,23 +10,33 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-
 import java.util.List;
+
+import android.support.design.widget.BottomNavigationView;
+
+
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback{
 
     //Views
     Toolbar toolbar;
-    private RecyclerView mForecastListRV;
-    private BeerAdapter mForecastAdapter;
+    RecyclerView recyclerView_beers;
+    BeerAdapter adapter_beers;
 
-    private LinearLayout progressLoading;
+    LinearLayout progressLoading;
     FloatingActionButton button_refresh;
 
+    FrameLayout frameLayout_mapholder;
+
+    BottomNavigationView nav_menu;
+
+    
+    // Google maps API
     SupportMapFragment mapView;
     GoogleMap map;
 
@@ -39,16 +49,17 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         // Get views
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        mForecastListRV = (RecyclerView)findViewById(R.id.rv_forecast_list);
+        recyclerView_beers = (RecyclerView)findViewById(R.id.recyclerview_beer);
         progressLoading = (LinearLayout)findViewById(R.id.progress_database_loading);
         button_refresh = (FloatingActionButton) findViewById(R.id.FAB_reload);
+        nav_menu = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        frameLayout_mapholder = (FrameLayout) findViewById(R.id.framelayout_mapholder);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         mapView = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapView);
         mapView.getMapAsync(this);
 
-
-
+        
         //Set up toolbar
         toolbar.setTitle(R.string.app_name);
         toolbar.setSubtitle(R.string.assignment_no);
@@ -58,13 +69,13 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         //Linear Layout Manager
         LinearLayoutManager llm = new LinearLayoutManager(this);
-        mForecastListRV.setLayoutManager(llm);
+        recyclerView_beers.setLayoutManager(llm);
 
-        mForecastAdapter = new BeerAdapter(this);
-        mForecastListRV.setAdapter(mForecastAdapter);
+        adapter_beers = new BeerAdapter(this);
+        recyclerView_beers.setAdapter(adapter_beers);
 
         //Hide floating action button when recyclerView is scrolled
-        mForecastListRV.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        recyclerView_beers.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
@@ -73,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
 
+        
         // Set up refresh button
         button_refresh.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,6 +92,43 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 setProgressVisibility( (progressLoading.getVisibility()==View.VISIBLE ? View.GONE : View.VISIBLE) );
             }
         });
+        
+        
+        // Set up bottom navigation panel
+        nav_menu.setOnNavigationItemSelectedListener(
+            new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(MenuItem item) {
+                    switch (item.getItemId()) {
+                        case R.id.action_beer:
+                            frameLayout_mapholder.setVisibility(View.GONE);
+                            recyclerView_beers.setVisibility(View.VISIBLE);
+                            break;
+                        case R.id.action_breweries:
+                            frameLayout_mapholder.setVisibility(View.VISIBLE);
+                            recyclerView_beers.setVisibility(View.GONE);
+                            break;
+                    }
+
+                    return false;
+                }
+            }
+        );
+
+
+        // Populate recyclerview with dummy data
+        Beer beer1 = new Beer();
+        beer1.name = "Bud Light (ew)";
+        beer1.description = "Piss beer";
+        beer1.IBU = 80.0f;
+        beer1.ABV = 4.0f;
+        Beer beer2 = new Beer();
+        beer2.name = "Local Craft beer";
+        beer2.description = "Expensive";
+        beer2.IBU = 10.0f;
+        beer2.ABV = 9.1f;
+        adapter_beers.addBeer(beer1);
+        adapter_beers.addBeer(beer2);
     }
 
     @Override
@@ -117,10 +166,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
 
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        map.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        map.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        // Add a marker and move the camera
+        LatLng point1 = new LatLng(44.564055, -123.277011);
+        map.addMarker(new MarkerOptions().position(point1).title("Test point"));
+        map.moveCamera(CameraUpdateFactory.newLatLng(point1));
     }
 
 
@@ -131,10 +180,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     // Update adapter data
     public void addBeer(List<Beer> data){
         for (Beer b : data){
-            mForecastAdapter.addBeer(b);
+            adapter_beers.addBeer(b);
         }
     }
     public void addBeer(Beer beer){
-        mForecastAdapter.addBeer(beer);
+        adapter_beers.addBeer(beer);
     }
 }
