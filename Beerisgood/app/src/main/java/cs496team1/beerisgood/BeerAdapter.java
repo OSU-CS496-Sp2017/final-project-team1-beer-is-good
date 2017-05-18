@@ -63,9 +63,6 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ForecastItemVi
         LinearLayout base;
 
         ImageView icon_name;
-        ImageView icon_desc;
-        ImageView icon_ibu;
-        ImageView icon_abv;
 
         TextView beer_name;
         TextView beer_desc;
@@ -80,9 +77,6 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ForecastItemVi
             base = (LinearLayout) itemView.findViewById(R.id.row_layout_weather_base);
 
             icon_name = (ImageView) itemView.findViewById(R.id.row_layout_icon_name);
-            icon_desc = (ImageView)itemView.findViewById(R.id.row_layout_icon_desc);
-            icon_ibu = (ImageView)itemView.findViewById(R.id.row_layout_icon_ibu);
-            icon_abv = (ImageView)itemView.findViewById(R.id.row_layout_icon_abv);
 
             beer_name = (TextView)itemView.findViewById(R.id.row_layout_text_name);
             beer_desc = (TextView)itemView.findViewById(R.id.row_layout_text_desc);

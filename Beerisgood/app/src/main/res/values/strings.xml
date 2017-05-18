@@ -25,13 +25,25 @@
     <string name="title_share">Share</string>
     <string name="title_refresh">Refresh</string>
     <string name="title_details">Details</string>
+    <string name="title_settings">Details</string>
     <string name="title_lastupdated">Last Updated - %1$s</string>
     <string name="title_uptodate">Up to Date</string>
     <string name="title_beer">Beer</string>
+    <string name="title_breweries">Breweries</string>
     <string name="title_description">Description</string>
     <string name="title_ibu">IBU</string>
     <string name="title_abv">ABV</string>
-    <string name="title_breweries">Breweries</string>
+    <string name="title_og">OG</string>
+    <string name="title_organic">Organic</string>
+    <string name="title_properties">Properties</string>
+    <string name="title_foodpairing">Food pairing</string>
+    <string name="title_glasstype">Glass type</string>
+    <string name="title_serving">Serving</string>
+    <string name="title_vintage">Vintage</string>
+
+    <string name="title_servewith">Serve with</string>
+    <string name="title_serveat">Serve at</string>
+    <string name="title_servein">Serve in</string>
 
 
     <!-- Error -->
@@ -57,6 +69,8 @@
     <!-- Placeholders -->
     <string name="placeholder_title">Title</string>
     <string name="placeholder_subtitle">SubTitle</string>
+    <string name="placeholder_number">#</string>
+    <string name="placeholder_boolean">yes/no</string>
 
     <!-- Intent -->
     <string name="intent_location">geo:%1$s,%2$s?q=%3$s,%4$s(%5$s+%6$s)</string>

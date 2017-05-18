@@ -4,5 +4,10 @@
     tools:context="carvellwakeman.incomeoutcome">
 
     <!-- Settings -->
+    <item android:id="@+id/toolbar_action_share"
+        android:title="@string/title_settings"
+        android:icon="@drawable/ic_settings"
+        app:showAsAction="always"
+        android:orderInCategory="100"/>
 
 </menu>

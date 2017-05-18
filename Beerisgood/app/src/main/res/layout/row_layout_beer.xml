@@ -50,13 +50,6 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <ImageView
-                    android:id="@+id/row_layout_icon_desc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_beer"
-                    android:tint="@color/colorAccent" />
-
                 <TextView
                     android:id="@+id/row_layout_text_desc"
                     android:layout_width="wrap_content"
@@ -79,18 +72,16 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <ImageView
-                    android:id="@+id/row_layout_icon_ibu"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_beer"
-                    android:tint="@color/colorAccent" />
-
                 <TextView
                     android:id="@+id/row_layout_text_ibu"
-
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@string/placeholder_number" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
                     android:text="@string/title_ibu" />
             </LinearLayout>
 
@@ -100,18 +91,22 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <ImageView
-                    android:id="@+id/row_layout_icon_abv"
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_beer"
-                    android:tint="@color/colorAccent" />
+                    android:layout_marginEnd="5dp"
+                    android:text="@string/title_abv" />
 
                 <TextView
                     android:id="@+id/row_layout_text_abv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/title_abv" />
+                    android:text="@string/placeholder_number" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="%" />
             </LinearLayout>
 
         </LinearLayout>

@@ -1,6 +1,8 @@
 package cs496team1.beerisgood;
 
 import android.Manifest;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,6 +18,7 @@ import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.List;
+import java.util.Random;
 
 import android.support.design.widget.BottomNavigationView;
 
@@ -34,7 +37,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     FrameLayout frameLayout_mapholder;
 
     BottomNavigationView nav_menu;
-
     
     // Google maps API
     SupportMapFragment mapView;
@@ -51,9 +53,13 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         recyclerView_beers = (RecyclerView)findViewById(R.id.recyclerview_beer);
         progressLoading = (LinearLayout)findViewById(R.id.progress_database_loading);
-        button_refresh = (FloatingActionButton) findViewById(R.id.FAB_reload);
+
         nav_menu = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+
         frameLayout_mapholder = (FrameLayout) findViewById(R.id.framelayout_mapholder);
+
+        button_refresh = (FloatingActionButton) findViewById(R.id.FAB_reload);
+
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         mapView = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapView);
@@ -99,6 +105,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(MenuItem item) {
+                    item.setChecked(true);
+
+                    // Individual items
                     switch (item.getItemId()) {
                         case R.id.action_beer:
                             frameLayout_mapholder.setVisibility(View.GONE);
@@ -120,13 +129,25 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         Beer beer1 = new Beer();
         beer1.name = "Bud Light (ew)";
         beer1.description = "Piss beer";
-        beer1.IBU = 80.0f;
+        beer1.year = 2017;
+        beer1.IBU = 80;
         beer1.ABV = 4.0f;
+        beer1.originalGravity = 1.062f;
+        beer1.servingTemperatureDisplay = "Room Temp";
+        beer1.glass = "Can";
+        beer1.foodPairings = "Fried chicken";
+
         Beer beer2 = new Beer();
         beer2.name = "Local Craft beer";
         beer2.description = "Expensive";
-        beer2.IBU = 10.0f;
+        beer2.year = 2003;
+        beer2.IBU = 10;
         beer2.ABV = 9.1f;
+        beer2.originalGravity = 0.89f;
+        beer2.servingTemperatureDisplay = "Cold";
+        beer2.servingTemperatureDisplay = "Cold";
+        beer2.glass = "Pint glass";
+        beer2.foodPairings = "Burger and fries";
         adapter_beers.addBeer(beer1);
         adapter_beers.addBeer(beer2);
     }
@@ -153,6 +174,27 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         return true;
     }
 
+    // Permissions callback
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 1: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    try {
+                        map.setMyLocationEnabled(true);
+                    } catch (SecurityException e){}
+
+                    zoomCamera(10.0f);
+                }
+                break;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
+    }
+
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -166,10 +208,29 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
 
-        // Add a marker and move the camera
-        LatLng point1 = new LatLng(44.564055, -123.277011);
-        map.addMarker(new MarkerOptions().position(point1).title("Test point"));
-        map.moveCamera(CameraUpdateFactory.newLatLng(point1));
+        // Request location permission
+        if ( ! Helper.isPermissionGranted(this, Manifest.permission.ACCESS_FINE_LOCATION) && Build.VERSION.SDK_INT >= 23 ){
+            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        } else {
+            try {
+                map.setMyLocationEnabled(true);
+            } catch (SecurityException e){}
+
+            zoomCamera(10.0f);
+        }
+
+        // Make random points
+        Random rand = new Random();
+        for (int i = 0; i < 10; i++){
+            // Add a marker and move the camera
+            LatLng point = new LatLng(44.564055 + (rand.nextFloat() - 0.5)/10, -123.277011 + (rand.nextFloat() - 0.5)/10);
+            map.addMarker(new MarkerOptions().position(point).title("Test point " + String.valueOf(i)));
+            map.moveCamera(CameraUpdateFactory.newLatLng(point));
+        }
+    }
+
+    public void zoomCamera(float zoom){
+        map.moveCamera(CameraUpdateFactory.zoomTo(zoom));
     }
 
 

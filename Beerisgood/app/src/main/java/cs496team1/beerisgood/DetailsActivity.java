@@ -21,19 +21,19 @@ public class DetailsActivity extends AppCompatActivity {
     // Views
     Toolbar toolbar;
 
-    TextView tv_weather;
-    TextView tv_weather_description;
-    ImageView iv_weather_icon;
-    TextView tv_temp;
-    TextView tv_temp_min;
-    TextView tv_temp_max;
-    TextView tv_humidity;
-    TextView tv_sealevel;
-    TextView tv_groundlevel;
-    TextView tv_cloudiness;
-    TextView tv_windspeed;
-    TextView tv_winddir;
-    TextView tv_rainvolume;
+    TextView description;
+    TextView year;
+    TextView originalGravity;
+    TextView IBU;
+    TextView ABV;
+    TextView glass;
+    TextView isOrganic;
+    ImageView label;
+    TextView servingTemperatureDisplay;
+    //TextView beerVariation;
+    TextView foodPairings;
+
+
 
 
 
@@ -53,47 +53,42 @@ public class DetailsActivity extends AppCompatActivity {
             // Get views
             toolbar = (Toolbar) findViewById(R.id.toolbar);
 
-            tv_weather = (TextView) findViewById(R.id.row_layout_weather_title);
-            tv_weather_description = ( TextView ) findViewById(R.id.row_layout_weather_subtitle);
-            iv_weather_icon = ( ImageView) findViewById(R.id.row_layout_weather_icon);
-            tv_temp = ( TextView ) findViewById(R.id.row_layout_temp);
-            tv_temp_min = ( TextView ) findViewById(R.id.row_layout_temp_subtitle_min);
-            tv_temp_max = ( TextView ) findViewById(R.id.row_layout_temp_subtitle_max);
-            tv_humidity = ( TextView ) findViewById(R.id.row_layout_humidity);
-            tv_sealevel = ( TextView ) findViewById(R.id.row_layout_sealevel);
-            tv_groundlevel = ( TextView ) findViewById(R.id.row_layout_grndlevel);
-            tv_cloudiness = ( TextView ) findViewById(R.id.row_layout_cloudiness);
-            tv_windspeed = ( TextView ) findViewById(R.id.row_layout_windspeed);
-            tv_winddir = ( TextView ) findViewById(R.id.row_layout_winddir);
-            tv_rainvolume = ( TextView ) findViewById(R.id.row_layout_rain3h);
+            description = (TextView) findViewById(R.id.details_description);
+            year = (TextView) findViewById(R.id.details_year);
+            originalGravity = (TextView) findViewById(R.id.details_og);
+            IBU = (TextView) findViewById(R.id.details_ibu);
+            ABV = (TextView) findViewById(R.id.details_abv);
+            glass = (TextView) findViewById(R.id.details_glass);
+            isOrganic = (TextView) findViewById(R.id.details_organic);
+            label = (ImageView) findViewById(R.id.details_image);
+            servingTemperatureDisplay = (TextView) findViewById(R.id.details_serve);
+            //beerVariation = (TextView) findViewById(R.id.details_);
+            foodPairings = (TextView) findViewById(R.id.details_foodpairings);
 
 
             //Set up toolbar
-            setSupportActionBar(toolbar);
-            toolbar.setTitle(R.string.title_details);
-            toolbar.setSubtitle(Helper.convertDateTime(this, beer.name));
+            toolbar.setTitle(beer.name);
+            //toolbar.setSubtitle(beer.name);
             toolbar.inflateMenu(R.menu.submenu_share);
             toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
+            setSupportActionBar(toolbar);
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) { onBackPressed(); }
             });
 
-            // Pull data from weatherMeasurment
-            //tv_weather.setText(beer.weather.get(0).weather);
-            //tv_weather_description.setText(beer.weather.get(0).weather_description);
-            //tv_temp.setText(String.valueOf(beer.temp));
-            //tv_temp_min.setText(String.valueOf(beer.temp_min));
+            // Pull data from beer object
+            description.setText(beer.description);
+            year.setText(String.valueOf(beer.year));
 
-            // Set icon
-            //String iconDrawable = "ic_weather_cloudy";
-            for (Map.Entry<String, String> entry : Helper.weather_icons.entrySet()){
-                //if (beer.weather.get(0).weather_icon.contains(entry.getKey())){
-                //    iconDrawable = entry.getValue();
-                //    break;
-                //}
-            }
+            originalGravity.setText(String.valueOf(beer.originalGravity));
+            IBU.setText(String.valueOf(beer.IBU));
+            ABV.setText(String.valueOf(beer.ABV));
+            glass.setText(beer.glass);
+            isOrganic.setText(String.valueOf(beer.isOrganic));
+            //label.setImageDrawable(beer.description);
+            servingTemperatureDisplay.setText(beer.servingTemperatureDisplay);
+            foodPairings.setText(beer.foodPairings);
 
-            //iv_weather_icon.setImageResource(getResources().getIdentifier(iconDrawable, "drawable", getPackageName()));
 
         } else {
             Log.e("APP", "Could not load details activity");

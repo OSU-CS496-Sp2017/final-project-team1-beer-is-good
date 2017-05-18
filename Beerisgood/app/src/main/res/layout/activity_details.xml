@@ -11,6 +11,7 @@
 
     <include layout="@layout/toolbar" />
 
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,88 +19,42 @@
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="0dp">
 
-        <!-- Weather description -->
+        <!-- Beer label image -->
         <android.support.v7.widget.CardView
-            android:id="@+id/rl_weather"
-
+            android:id="@+id/cv_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:layout_marginEnd="@dimen/cardview_default_margin"
             android:layout_marginStart="@dimen/cardview_default_margin"
             card_view:cardCornerRadius="@dimen/cardview_default_radius"
             card_view:cardElevation="@dimen/cardview_default_elevation"
             card_view:cardUseCompatPadding="true">
 
-            <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:background="@drawable/ripple_api19"
-            android:padding="@dimen/cardview_default_padding">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:background="@drawable/ripple_api19"
+                android:clickable="true"
+                android:orientation="vertical"
+                android:padding="@dimen/cardview_default_padding">
 
-                <TextView
-                    android:id="@+id/tv_weather_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginBottom="5dp"
-                    android:text="Weather"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-
-            <ImageView
-                android:id="@+id/row_layout_weather_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_weather_title"
-                android:layout_marginEnd="5dp"
-                android:src="@drawable/ic_beer"
-                android:tint="@color/turquoise" />
-
-                <TextView
-                    android:id="@+id/row_layout_weather_title"
+                <ImageView
+                    android:id="@+id/details_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_weather_title"
-                    android:layout_gravity="center_vertical"
-                    android:layout_toEndOf="@id/row_layout_weather_icon"
-                    android:text="Weather"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@color/black" />
-
-                <TextView
-                    android:id="@+id/textview10002"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_weather_title"
                     android:layout_marginEnd="5dp"
-                    android:layout_marginStart="5dp"
-                    android:layout_toEndOf="@+id/row_layout_weather_title"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="-" />
+                    android:src="@drawable/img_beer_label_ex" />
 
-                <TextView
-                    android:id="@+id/row_layout_weather_subtitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_weather_title"
-                    android:layout_toEndOf="@id/textview10002"
-                    android:text="Description"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:visibility="visible" />
-
-        </RelativeLayout>
+            </LinearLayout>
 
         </android.support.v7.widget.CardView>
 
-        <!-- Temperature -->
+        <!-- Beer description -->
         <android.support.v7.widget.CardView
-            android:id="@+id/ll_temp"
-            android:layout_below="@+id/rl_weather"
-
+            android:id="@+id/cv_desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
+            android:layout_below="@+id/cv_image"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="@dimen/cardview_default_margin"
             android:layout_marginStart="@dimen/cardview_default_margin"
@@ -108,104 +63,55 @@
             card_view:cardUseCompatPadding="true">
 
             <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:background="@drawable/ripple_api19"
-            android:padding="@dimen/cardview_default_padding"
-            android:orientation="vertical">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:clickable="true"
+                android:background="@drawable/ripple_api19"
+                android:padding="@dimen/cardview_default_padding">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
-                    android:text="Temperature"
+                    android:text="@string/title_description"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
+                <!-- Description -->
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <!-- Current temperature -->
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/details_description"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/title_description"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:visibility="visible" />
+                </LinearLayout>
 
-                        <TextView
-                            android:id="@+id/row_layout_temp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignEnd="@+id/row_layout_temp_subtitle_max"
-                            android:layout_alignParentEnd="false"
-                            android:layout_centerInParent="false"
-                            android:layout_centerVertical="true"
-                            android:layout_gravity="center_vertical"
-                            android:gravity="center_vertical"
-                            android:text="Temp"
-                            android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:textColor="@color/black" />
+                <!-- Year -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignEnd="@+id/row_layout_temp"
-                            android:layout_alignParentEnd="false"
-                            android:layout_toEndOf="@+id/row_layout_temp"
-                            android:scaleX="0.5"
-                            android:scaleY="0.5"
-                            android:tint="@color/turquoise"
-                            app:srcCompat="@drawable/ic_beer" />
-
-                    </LinearLayout>
-
-                    <!-- Minimum temperature -->
-                    <LinearLayout
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:orientation="horizontal">
+                        android:layout_marginEnd="5dp"
+                        android:text="@string/title_vintage"
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                        <TextView
-                            android:id="@+id/row_layout_temp_subtitle_min"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:gravity="center_vertical"
-                            android:text="Minimum"
-                            android:textAppearance="?android:attr/textAppearanceSmall" />
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:tint="@color/turquoise"
-                            app:srcCompat="@drawable/ic_chevron_down" />
-
-                    </LinearLayout>
-
-                    <!-- Maximum temperature -->
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/details_year"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/row_layout_temp_subtitle_max"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_alignParentBottom="true"
-                            android:gravity="center_vertical"
-                            android:text="Maximum"
-                            android:textAppearance="?android:attr/textAppearanceSmall" />
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:tint="@color/turquoise"
-                            app:srcCompat="@drawable/ic_chevron_up" />
-
-                    </LinearLayout>
+                        android:text="@string/placeholder_number"
+                        android:textAppearance="?android:attr/textAppearanceSmall"/>
 
                 </LinearLayout>
 
@@ -213,185 +119,12 @@
 
         </android.support.v7.widget.CardView>
 
-        <!-- Pressure -->
+        <!-- Beer IBU, ABV, OG, isOrganic -->
         <android.support.v7.widget.CardView
-            android:id="@+id/ll_pressure"
-            android:layout_below="@+id/ll_temp"
-
+            android:id="@+id/cv_prop"
+            android:layout_below="@+id/cv_desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="@dimen/cardview_default_margin"
-            android:layout_marginStart="@dimen/cardview_default_margin"
-            card_view:cardCornerRadius="@dimen/cardview_default_radius"
-            card_view:cardElevation="@dimen/cardview_default_elevation"
-            card_view:cardUseCompatPadding="true">
-
-            <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:background="@drawable/ripple_api19"
-            android:padding="@dimen/cardview_default_padding"
-            android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:text="Environment"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/gray" />
-
-            <!-- Humidity -->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="5dp"
-                    android:src="@drawable/ic_beer"
-                    android:tint="@color/turquoise" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginEnd="5dp"
-                    android:layout_weight="1"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@color/black"
-                    android:text="Humidity" />
-
-                <TextView
-                    android:id="@+id/row_layout_humidity"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:text="Humidity"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@color/black" />
-
-                <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="5dp"
-                    android:layout_weight="1"
-                    android:text="%"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@color/black" />
-
-            </LinearLayout>
-
-            <!-- Sea Level Pressure -->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="5dp"
-                    android:src="@drawable/ic_beer"
-                    android:tint="@color/turquoise" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginEnd="5dp"
-                    android:layout_weight="1"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@color/black"
-                    android:text="Pressure sea level" />
-
-                <TextView
-                    android:id="@+id/row_layout_sealevel"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@color/black"
-                    android:text="Pressure sea level" />
-
-                <TextView
-                    android:id="@+id/textView3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="5dp"
-                    android:layout_weight="1"
-                    android:text="hPa"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@color/black" />
-
-            </LinearLayout>
-
-            <!-- Grnd Level Pressure -->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="5dp"
-                    android:src="@drawable/ic_groundlevel"
-                    android:tint="@color/turquoise" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginEnd="5dp"
-                    android:layout_weight="1"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@color/black"
-                    android:text="Pressure ground level" />
-
-                <TextView
-                    android:id="@+id/row_layout_grndlevel"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:text="Pressure ground level"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@color/black" />
-
-                <TextView
-                    android:id="@+id/textView8"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="5dp"
-                    android:layout_weight="1"
-                    android:text="hPa"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@color/black" />
-
-            </LinearLayout>
-
-
-        </LinearLayout>
-
-        </android.support.v7.widget.CardView>
-
-        <!-- Wind -->
-        <android.support.v7.widget.CardView
-            android:id="@+id/ll_wind"
-            android:layout_below="@+id/ll_pressure"
-
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
             android:layout_marginTop="10dp"
             android:layout_marginEnd="@dimen/cardview_default_margin"
             android:layout_marginStart="@dimen/cardview_default_margin"
@@ -411,160 +144,108 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
-                    android:text="Wind"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/gray" />
+                    android:text="@string/title_properties"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
 
-            <!-- Cloudiness -->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="5dp"
-                    android:src="@drawable/ic_beer"
-                    android:tint="@color/turquoise" />
-
-                <TextView
-                    android:id="@+id/textView4"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginEnd="5dp"
-                    android:layout_weight="1"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@color/black"
-                    android:text="Cloudiness" />
+                    android:orientation="horizontal"
+                    android:weightSum="4">
 
-                <TextView
-                    android:id="@+id/row_layout_cloudiness"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@color/black"
-                    android:text="Cloudiness" />
+                    <!-- IBU -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="5dp"
-                    android:layout_weight="1"
-                    android:text="%"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@color/black" />
+                        <TextView
+                            android:id="@+id/details_ibu"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/placeholder_number" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:text="@string/title_ibu" />
+                    </LinearLayout>
+
+                    <!-- ABV -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/details_abv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/placeholder_number" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:text="@string/title_abv" />
+                    </LinearLayout>
+
+                    <!-- OG -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/details_og"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/placeholder_number" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:text="@string/title_og" />
+                    </LinearLayout>
+
+                    <!-- is Organic -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="5dp"
+                            android:text="@string/title_organic" />
+
+                        <TextView
+                            android:id="@+id/details_organic"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/placeholder_boolean" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
 
             </LinearLayout>
-
-            <!-- Wind Speed -->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="5dp"
-                    android:src="@drawable/ic_beer"
-                    android:tint="@color/turquoise" />
-
-                <TextView
-                    android:id="@+id/textView5"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginEnd="5dp"
-                    android:layout_weight="1"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@color/black"
-                    android:text="Wind Speed" />
-
-                <TextView
-                    android:id="@+id/row_layout_windspeed"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@color/black"
-                    android:text="Wind Speed" />
-
-                <TextView
-                    android:id="@+id/textView9"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="5dp"
-                    android:layout_weight="1"
-                    android:text="m/s"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@color/black" />
-
-            </LinearLayout>
-
-            <!-- Wind Dir -->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="5dp"
-                    android:src="@drawable/ic_beer"
-                    android:tint="@color/turquoise" />
-
-                <TextView
-                    android:id="@+id/textView6"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginEnd="5dp"
-                    android:layout_weight="1"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@color/black"
-                    android:text="Wind Direction" />
-
-                <TextView
-                    android:id="@+id/row_layout_winddir"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@color/black"
-                    android:text="Wind Direction" />
-
-                <TextView
-                    android:id="@+id/textView10"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="5dp"
-                    android:layout_weight="1"
-                    android:text="degrees"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@color/black" />
-
-            </LinearLayout>
-
-
-        </LinearLayout>
 
         </android.support.v7.widget.CardView>
 
-        <!-- Rain -->
+        <!-- Serving -->
         <android.support.v7.widget.CardView
-            android:layout_below="@+id/ll_wind"
-
+            android:id="@+id/cv_serve"
+            android:layout_below="@+id/cv_prop"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:layout_marginTop="10dp"
             android:layout_marginEnd="@dimen/cardview_default_margin"
             android:layout_marginStart="@dimen/cardview_default_margin"
@@ -573,74 +254,112 @@
             card_view:cardUseCompatPadding="true">
 
             <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:background="@drawable/ripple_api19"
-            android:padding="@dimen/cardview_default_padding"
-            android:orientation="vertical">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:background="@drawable/ripple_api19"
+                android:padding="@dimen/cardview_default_padding"
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
-                    android:text="Rain"
+                    android:text="@string/title_serving"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@color/gray" />
 
-            <!-- Rain Level -->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <ImageView
+                <!-- Temperature to serve -->
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="5dp"
-                    android:src="@drawable/ic_beer"
-                    android:tint="@color/turquoise" />
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/textView7"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginEnd="5dp"
-                    android:layout_weight="1"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@color/black"
-                    android:text="Rain Volume 3h" />
+                    <!-- Serve at -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/row_layout_rain3h"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@color/black"
-                    android:text="Rain Volume 3h" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginEnd="5dp"
+                            android:text="@string/title_serveat"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textColor="@color/black" />
 
-                <TextView
-                    android:id="@+id/textView11"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="5dp"
-                    android:layout_weight="1"
-                    android:text="mm"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@color/black" />
+                        <TextView
+                            android:id="@+id/details_serve"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:text="@string/title_serveat"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textColor="@color/black" />
 
-            </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Serve with -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginEnd="5dp"
+                            android:text="@string/title_servewith"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:id="@+id/details_foodpairings"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:text="@string/title_foodpairing"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textColor="@color/black" />
+
+                    </LinearLayout>
+
+                    <!-- Serve in -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginEnd="5dp"
+                            android:text="@string/title_servein"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:id="@+id/details_glass"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:text="@string/title_glasstype"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textColor="@color/black" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
 
         </LinearLayout>
 
         </android.support.v7.widget.CardView>
 
     </RelativeLayout>
-
-
 
 
 </LinearLayout>
