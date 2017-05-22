@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottom_sheet"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/white"
+    app:behavior_hideable="true"
+    app:behavior_peekHeight="?attr/actionBarSize"
+    app:layout_behavior="@string/bottom_sheet_behavior">
+
+    <!-- Name -->
+    <!-- Location type -->
+    <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/bottomsheet_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        app:layout_collapseMode="pin"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!-- Description -->
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ripple_api19"
+            android:clickable="true"
+            android:orientation="horizontal"
+            android:paddingBottom="20dp"
+            android:paddingEnd="10dp"
+            android:paddingStart="15dp"
+            android:paddingTop="20dp">
+            <TextView
+                android:id="@+id/bottomsheet_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/placeholder_description"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/black" />
+
+        </LinearLayout>
+        <include layout="@layout/view_divider"/>
+
+        <!-- Location -->
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ripple_api19"
+            android:clickable="true"
+            android:orientation="horizontal"
+            android:paddingBottom="20dp"
+            android:paddingEnd="10dp"
+            android:paddingStart="15dp"
+            android:paddingTop="20dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="20dp"
+                android:src="@drawable/ic_map_marker"
+                android:tint="@color/colorAccent" />
+
+            <TextView
+                android:id="@+id/bottomsheet_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/title_location"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/black" />
+
+        </LinearLayout>
+        <include layout="@layout/view_divider"/>
+
+        <!-- Phone -->
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ripple_api19"
+            android:clickable="true"
+            android:orientation="horizontal"
+            android:paddingBottom="20dp"
+            android:paddingEnd="10dp"
+            android:paddingStart="15dp"
+            android:paddingTop="20dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="20dp"
+                android:src="@drawable/ic_phone"
+                android:tint="@color/colorAccent" />
+
+            <TextView
+                android:id="@+id/bottomsheet_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/placeholder_phone"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/black" />
+
+        </LinearLayout>
+        <include layout="@layout/view_divider"/>
+
+        <!-- Website -->
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ripple_api19"
+            android:clickable="true"
+            android:orientation="horizontal"
+            android:paddingBottom="20dp"
+            android:paddingEnd="10dp"
+            android:paddingStart="15dp"
+            android:paddingTop="20dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="20dp"
+                android:src="@drawable/ic_web"
+                android:tint="@color/colorAccent" />
+
+            <TextView
+                android:id="@+id/bottomsheet_website"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/placeholder_website"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/black" />
+
+        </LinearLayout>
+        <include layout="@layout/view_divider"/>
+
+        <!-- Hours of Operation -->
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ripple_api19"
+            android:clickable="true"
+            android:orientation="horizontal"
+            android:paddingBottom="20dp"
+            android:paddingEnd="10dp"
+            android:paddingStart="15dp"
+            android:paddingTop="20dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="20dp"
+                android:src="@drawable/ic_clock"
+                android:tint="@color/colorAccent" />
+
+            <TextView
+                android:id="@+id/bottomsheet_hours"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/placeholder_hours"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/black" />
+
+        </LinearLayout>
+        <include layout="@layout/view_divider"/>
+
+        <!-- Brewery information -->
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ripple_api19"
+            android:clickable="true"
+            android:orientation="horizontal"
+            android:paddingBottom="20dp"
+            android:paddingEnd="10dp"
+            android:paddingStart="15dp"
+            android:paddingTop="20dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="20dp"
+                android:src="@drawable/ic_beer"
+                android:tint="@color/colorAccent" />
+
+            <TextView
+                android:id="@+id/bottomsheet_brewery"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/placeholder_brewery"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/black" />
+
+        </LinearLayout>
+        <include layout="@layout/view_divider"/>
+    </LinearLayout>
+
+</LinearLayout>

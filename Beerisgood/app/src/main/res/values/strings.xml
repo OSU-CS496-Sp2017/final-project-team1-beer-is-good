@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Beer Is Good</string>
-    <string name="assignment_no">Mockup</string>
+    <string name="assignment_no">CS 496 Final Project</string>
 
     <!-- API Access -->
     <!--
@@ -19,9 +19,17 @@
     -->
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyC1IwWngp8-Y16M7qWfuWgJtOG9EsEfLtg</string>
 
+    <string name="brewerydb_api_key">4e7354b8b5c4e66dd3b58e60b53dd246</string>
+    <string name="brewerydb_base_url">http://api.brewerydb.com/v2/</string>
+    <string name="brewerydb_base_key">key</string>
+    <string name="brewerydb_base_beer">beers</string>
+    <string name="brewerydb_base_location">locations</string>
+
+    <string name="brewerydb_beer_additional">withBreweries=Y&amp;</string>
+    <string name="brewerydb_brewery_additional">postalCode=97333&amp;</string>
+
 
     <!-- Titles -->
-    <string name="title_location">Location</string>
     <string name="title_share">Share</string>
     <string name="title_refresh">Refresh</string>
     <string name="title_details">Details</string>
@@ -29,7 +37,9 @@
     <string name="title_lastupdated">Last Updated - %1$s</string>
     <string name="title_uptodate">Up to Date</string>
     <string name="title_beer">Beer</string>
-    <string name="title_breweries">Breweries</string>
+    <string name="title_beers">Beers</string>
+    <string name="title_location">Location</string>
+    <string name="title_locations">Locations</string>
     <string name="title_description">Description</string>
     <string name="title_ibu">IBU</string>
     <string name="title_abv">ABV</string>
@@ -71,6 +81,11 @@
     <string name="placeholder_subtitle">SubTitle</string>
     <string name="placeholder_number">#</string>
     <string name="placeholder_boolean">yes/no</string>
+    <string name="placeholder_phone">Phone</string>
+    <string name="placeholder_website">Website</string>
+    <string name="placeholder_hours">Hours of Operation</string>
+    <string name="placeholder_brewery">Brewery</string>
+    <string name="placeholder_description">Description</string>
 
     <!-- Intent -->
     <string name="intent_location">geo:%1$s,%2$s?q=%3$s,%4$s(%5$s+%6$s)</string>

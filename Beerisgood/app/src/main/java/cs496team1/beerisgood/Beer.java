@@ -11,6 +11,8 @@ public class Beer implements Serializable {
 
     public Beer(){}
 
+    public int numberOfPages;
+
     public String id;
     public String name;
     public String description;

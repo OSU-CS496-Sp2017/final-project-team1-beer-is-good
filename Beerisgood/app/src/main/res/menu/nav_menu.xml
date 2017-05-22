@@ -2,10 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_breweries"
+        android:id="@+id/action_locations"
         android:enabled="true"
         android:icon="@drawable/ic_map_marker"
-        android:title="@string/title_breweries"
+        android:title="@string/title_locations"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_beer"
