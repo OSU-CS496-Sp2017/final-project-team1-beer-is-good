@@ -35,13 +35,14 @@ public class HttpRequest {
         return api_base + api_beer + "?" + api_additional + api_key_param + "=" + api_key;
     }
 
-    public static String buildLocationUrl(Context c){
+    public static String buildLocationUrl(Context c, String locality, String region){
         // Gather strings
         String api_base = c.getString(R.string.brewerydb_base_url);
         String api_key_param = c.getString(R.string.brewerydb_base_key);
         String api_key = c.getString(R.string.brewerydb_api_key);
         String api_location = c.getString(R.string.brewerydb_base_location);
-        String api_additional = c.getString(R.string.brewerydb_brewery_additional);
+        //String api_additional = c.getString(R.string.brewerydb_brewery_additional);
+        String api_additional = "locality=" + locality + "&region=" + region + "&";
 
         return api_base + api_location + "?" + api_additional + api_key_param + "=" + api_key;
     }

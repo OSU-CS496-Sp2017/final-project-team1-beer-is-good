@@ -85,7 +85,7 @@
         android:layout_marginBottom="@dimen/fab_margin"
         android:layout_marginEnd="@dimen/fab_margin"
         android:scaleType="center"
-        android:src="@drawable/ic_reload" />
+        android:src="@drawable/ic_search" />
 
     <!-- Bottom Sheet Content -->
     <include layout="@layout/fragment_bottomsheet" />

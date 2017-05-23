@@ -26,7 +26,7 @@
     <string name="brewerydb_base_location">locations</string>
 
     <string name="brewerydb_beer_additional">withBreweries=Y&amp;</string>
-    <string name="brewerydb_brewery_additional">postalCode=97330&amp;</string>
+    <string name="brewerydb_brewery_additional">locality=corvallis&amp;region=oregon&amp;</string>
 
 
     <!-- Titles -->
@@ -54,6 +54,8 @@
     <string name="title_servewith">Serve with</string>
     <string name="title_serveat">Serve at</string>
     <string name="title_servein">Serve in</string>
+
+    <string name="title_search_area">Search this area</string>
 
 
     <!-- Error -->
@@ -89,7 +91,9 @@
 
     <!-- Template -->
     <string name="template_location">%1$s, %2$s, %3$s %4$s</string>
-    <string name="template_type_established">%1$s • Established %2$s</string>
+    <string name="template_type">%1$s</string>
+    <string name="template_opened"> • Opened %1$s</string>
+    <string name="template_est"> • Brewery Est. %1$s</string>
 
     <!-- Intent -->
 

@@ -46,7 +46,7 @@ public class Location {
 
     // Formatting methods
     public String getName(){
-        String[] blacklistNames = {"main brewery"};
+        String[] blacklistNames = {"main brewery", "main cidery", "main meadery"};
         if (!name.equals("")){
             for (String item : blacklistNames) {
                 if (name.toLowerCase().contains(item)){ return brewery_name; }
@@ -54,6 +54,12 @@ public class Location {
             return name;
         }
         return brewery_name;
+    }
+    public int getYearOpened(){
+        if (yearOpened != 0){
+            return yearOpened;
+        }
+        return brewery_established;
     }
     public String getHoursOfOperationFormatted(){
         return hoursOfOperation.replaceAll("\\\\r", ""); // Literally \r
