@@ -44,6 +44,27 @@ public class Location {
     public String brewery_statusDisplay;
 
 
+    // Formatting methods
+    public String getName(){
+        String[] blacklistNames = {"main brewery"};
+        if (!name.equals("")){
+            for (String item : blacklistNames) {
+                if (name.toLowerCase().contains(item)){ return brewery_name; }
+            }
+            return name;
+        }
+        return brewery_name;
+    }
+    public String getHoursOfOperationFormatted(){
+        return hoursOfOperation.replaceAll("\\\\r", ""); // Literally \r
+    }
+    public String getWebsite(){
+        if (!website.equals("")){
+            return website;
+        } else {
+            return brewery_website;
+        }
+    }
 
 
     //public String icon;

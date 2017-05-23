@@ -26,7 +26,7 @@
     <string name="brewerydb_base_location">locations</string>
 
     <string name="brewerydb_beer_additional">withBreweries=Y&amp;</string>
-    <string name="brewerydb_brewery_additional">postalCode=97333&amp;</string>
+    <string name="brewerydb_brewery_additional">postalCode=97330&amp;</string>
 
 
     <!-- Titles -->
@@ -87,6 +87,10 @@
     <string name="placeholder_brewery">Brewery</string>
     <string name="placeholder_description">Description</string>
 
+    <!-- Template -->
+    <string name="template_location">%1$s, %2$s, %3$s %4$s</string>
+    <string name="template_type_established">%1$s • Established %2$s</string>
+
     <!-- Intent -->
-    <string name="intent_location">geo:%1$s,%2$s?q=%3$s,%4$s(%5$s+%6$s)</string>
+
 </resources>

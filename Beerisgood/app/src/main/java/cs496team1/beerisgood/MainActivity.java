@@ -1,7 +1,10 @@
 package cs496team1.beerisgood;
 
 import android.Manifest;
+import android.app.SearchManager;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.FloatingActionButton;
@@ -39,8 +42,29 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     // Bottom Sheet
     View bottomSheet;
-    Toolbar bottomsheet_toolbar;
+    View bottomsheet_nested_scrollview;
     BottomSheetBehavior mBottomSheetBehavior;
+
+    // Name and type
+    Toolbar bottomsheet_toolbar;
+
+    // Description
+    LinearLayout bottomsheet_layout_description;
+    TextView bottomsheet_description;
+    // Location
+    LinearLayout bottomsheet_layout_location;
+    TextView bottomsheet_location;
+    // Phone
+    LinearLayout bottomsheet_layout_phone;
+    TextView bottomsheet_phone;
+    // Website
+    LinearLayout bottomsheet_layout_website;
+    TextView bottomsheet_website;
+    // Hours of Operation
+    LinearLayout bottomsheet_layout_hours;
+    TextView bottomsheet_hours;
+    // Brewery
+    //TextView bottomsheet_brewery;
 
     // Beers fragment
     FragmentBeers beersView;
@@ -68,8 +92,21 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         button_refresh = (FloatingActionButton) findViewById(R.id.FAB_reload);
 
         bottomSheet = findViewById(R.id.bottom_sheet);
+        bottomsheet_nested_scrollview = findViewById(R.id.bottomsheet_nested_scrollview);
 
         bottomsheet_toolbar = (Toolbar) findViewById(R.id.bottomsheet_toolbar);
+        bottomsheet_description = (TextView) findViewById(R.id.bottomsheet_description);
+        bottomsheet_location = (TextView) findViewById(R.id.bottomsheet_location);
+        bottomsheet_phone = (TextView) findViewById(R.id.bottomsheet_phone);
+        bottomsheet_website = (TextView) findViewById(R.id.bottomsheet_website);
+        bottomsheet_hours = (TextView) findViewById(R.id.bottomsheet_hours);
+
+        bottomsheet_layout_description = (LinearLayout) findViewById(R.id.bottomsheet_layout_description);
+        bottomsheet_layout_location = (LinearLayout) findViewById(R.id.bottomsheet_layout_location);
+        bottomsheet_layout_phone = (LinearLayout) findViewById(R.id.bottomsheet_layout_phone);
+        bottomsheet_layout_website = (LinearLayout) findViewById(R.id.bottomsheet_layout_website);
+        bottomsheet_layout_hours = (LinearLayout) findViewById(R.id.bottomsheet_layout_hours);
+        //bottomsheet_brewery = (TextView) findViewById(R.id.bottomsheet_brewery);
 
         // Fragments
         mapView = new SupportMapFragment();
@@ -105,8 +142,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
 
         mBottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
-            @Override
-            public void onStateChanged(View bottomSheet, int newState) {
+            @Override public void onStateChanged(View bottomSheet, int newState) {
                 // Expanded behavior
                 if (newState == BottomSheetBehavior.STATE_EXPANDED) {
                     //bottomSheetHeading.setText(getString(R.string.text_collapse_me));
@@ -120,6 +156,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                         button_refresh.hide();
                         break;
                     case BottomSheetBehavior.STATE_EXPANDED:
+
                         button_refresh.hide();
                         break;
                     case BottomSheetBehavior.STATE_HIDDEN:
@@ -131,6 +168,28 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
             @Override public void onSlide(View bottomSheet, float slideOffset) {}
+        });
+
+        // Bottom sheet click listeners
+        bottomsheet_layout_location.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("google.navigation:q=" + bottomsheet_location.getText().toString()));
+                startActivity(intent);
+            }
+        });
+        bottomsheet_layout_phone.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + bottomsheet_phone.getText().toString()));
+                startActivity(intent);
+            }
+        });
+        bottomsheet_layout_website.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View view) {
+                String url = bottomsheet_website.getText().toString();
+                if (!url.startsWith("http://") && !url.startsWith("https://")) { url = "http://" + url; }
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                startActivity(intent);
+            }
         });
 
 
@@ -246,10 +305,26 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     // Bottom sheet
     public void setBottomSheetDetails(Location location){
         // Name and type
-        bottomsheet_toolbar.setTitle(location.brewery_name);
-        bottomsheet_toolbar.setSubtitle(location.locationTypeDisplay);
+        bottomsheet_toolbar.setTitle(location.getName());
+        bottomsheet_toolbar.setSubtitle(String.format(getString(R.string.template_type_established), location.locationTypeDisplay, String.valueOf(location.brewery_established)));
 
         // Description
+        bottomsheet_description.setText(location.brewery_description);
+
+        // Location
+        bottomsheet_location.setText(String.format(getString(R.string.template_location), location.streetAddress, location.city, location.region, String.valueOf(location.postalcode)));
+
+        // Phone
+        bottomsheet_phone.setText(location.phone);
+
+        // Website
+        bottomsheet_website .setText(location.getWebsite());
+
+        // Hours of Operation
+        String hours = location.getHoursOfOperationFormatted();
+        if (hours == null || hours.equals("")){ bottomsheet_layout_hours.setVisibility(View.GONE); }
+        else { bottomsheet_hours.setText(hours); }
+
     }
 
 
