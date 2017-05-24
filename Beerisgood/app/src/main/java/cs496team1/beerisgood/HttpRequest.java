@@ -65,7 +65,8 @@ public class HttpRequest {
     }
 
 
-    public static void formatBeerResponse(String response){
+    public static ArrayList<Beer> formatBeerResponse(String response){
+        ArrayList<Beer> beers = new ArrayList<>();
         try {
             // Convert to JSON
             JSONObject jsonObj = new JSONObject(response);
@@ -76,12 +77,17 @@ public class HttpRequest {
             for (int i = 0; i < JSON_list.length(); i++) {
                 // Individual list item
                 JSONObject JSON_beer_item = getJsonObj(JSON_list, i);
-                ObjectManager.addBeer(getBeer(JSON_beer_item));
+                Beer beer = getBeer(JSON_beer_item);
+                ObjectManager.addBeer(beer);
+                beers.add(beer);
             }
         } catch (Exception e) {}
+
+        return beers;
     }
 
-    public static void formatLocationResponse(String response){
+    public static ArrayList<Location> formatLocationResponse(String response){
+        ArrayList<Location> locations = new ArrayList<>();
         try {
             // Convert to JSON
             JSONObject jsonObj = new JSONObject(response);
@@ -92,10 +98,14 @@ public class HttpRequest {
             for (int i = 0; i < JSON_list.length(); i++) {
                 // Individual list item
                 JSONObject JSON_loc_item = getJsonObj(JSON_list, i);
-                ObjectManager.addLocation(getLocation(JSON_loc_item));
+                Location loc = getLocation(JSON_loc_item);
+                ObjectManager.addLocation(loc);
+                locations.add(loc);
             }
 
         } catch (Exception e) {}
+
+        return locations;
     }
 
 

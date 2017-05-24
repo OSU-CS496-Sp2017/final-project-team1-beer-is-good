@@ -24,13 +24,14 @@ public class AsyncRequest extends AsyncTask<Object, String, String> {
         try {
             // Decode parameters
             String url = (String) params[0];
-            Log.e("APP", "URL:" + url);
             _callBack = (CallBack) params[1];
 
             // Make request
             _response = HttpRequest.run(url);
 
             //response = "Hi";
+
+            Log.e("APP", "Completed request - " + url);
 
         } catch (Exception ex){ _response = ex.toString(); }
 

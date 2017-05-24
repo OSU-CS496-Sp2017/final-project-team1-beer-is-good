@@ -20,13 +20,11 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.*;
-import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.*;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.*;
+import com.google.maps.android.clustering.ClusterManager;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -34,7 +32,7 @@ import java.util.List;
 import java.util.Locale;
 
 
-public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
+public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     //Views
     Toolbar toolbar;
@@ -75,7 +73,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     FragmentBeers beersView;
 
     // Map fragment
-    ArrayList<Marker> mapMarkers;
+    ClusterManager<CustomMarker> clusterManager;
+    ArrayList<CustomMarker> recentMarkers; //Markers that were recently tapped by the user (deselect them!)
+
 
     // Google maps API
     SupportMapFragment mapView;
@@ -139,8 +139,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override public void onPageSelected(int position) {
                 // Hide bottom sheet
                 mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-                // Reset map markers
-                resetMarkers();
 
                 // Switch on tab index
                 switch(position){
@@ -191,15 +189,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 // Hide this button
                 button_refresh.hide();
 
-                // Reset markers
-                mapMarkers = new ArrayList<>();
-
                 // Make API calls (dependant on tab)
                 switch(viewPager.getCurrentItem()){
                     case 0: // Map
                         refreshing_locations = true;
-                        if (_map == null) { mapView.getMapAsync(MainActivity.this); }
-                        else { updateLocationsFromLocality(_map); }
+                        findLocationsFromCity(_map);
                         break;
                     case 1: // Beers
                         refreshing_beers = true;
@@ -234,7 +228,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                         break;
                     case BottomSheetBehavior.STATE_HIDDEN:
                         button_refresh.show();
-                        resetMarkers();
                         break;
                 }
             }
@@ -267,7 +260,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
         // Map markers
-        mapMarkers = new ArrayList<>();
+        recentMarkers = new ArrayList<>();
 
         // Localities and regions
         localities = new ArrayList<>();
@@ -339,13 +332,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 _map.setMyLocationEnabled(true);
 
                 // Set map marker click listener
-                _map.setOnMarkerClickListener(this);
+                //_map.setOnMarkerClickListener(this);
 
                 // Set map click listener (Hide bottom sheet)
                 _map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
                     @Override public void onMapClick(LatLng latLng) {
                         // Reset markers and bottom sheet
-                        resetMarkers();
                         mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
                     }
                 });
@@ -361,8 +353,27 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 // Set zoom level
                 zoomCamera(_map, 10.0f);
 
+                // Cluster marker points
+                clusterManager = new ClusterManager<>(this, googleMap);
+                _map.setOnCameraIdleListener(clusterManager);
+                _map.setOnMarkerClickListener(clusterManager);
+                _map.setOnInfoWindowClickListener(clusterManager);
+
+                // Set marker click listener
+                clusterManager.setOnClusterItemClickListener(new ClusterManager.OnClusterItemClickListener<CustomMarker>() {
+                    @Override
+                    public boolean onClusterItemClick(CustomMarker customMarker) {
+                        // Set bottom sheet details (marker.getSnippet() is the ID of the location object)
+                        setBottomSheetDetails(ObjectManager.getLocation(customMarker.getId()));
+
+                        // Set bottom sheet state
+                        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                        return false;
+                    }
+                });
+
                 // Make Async API call for locations
-                updateLocationsFromLocality(_map);
+                findLocationsFromCity(_map);
                 //getLocations(_map, locality, region);
 
             } catch (SecurityException e){}
@@ -373,51 +384,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         map.moveCamera(CameraUpdateFactory.zoomTo(zoom));
     }
 
-    public void updateLocationsFromLocality(GoogleMap map){
-
-        LatLng latLong = map.getCameraPosition().target;
-        try {
-            Geocoder gcd = new Geocoder(MainActivity.this, Locale.getDefault());
-
-            List<Address> addresses = gcd.getFromLocation(latLong.latitude, latLong.longitude, 10);
-
-            //Log.e("Location", String.valueOf(addresses.size()));
-            for (int i = 0; i < addresses.size(); i++) {
-                String locality = addresses.get(i).getLocality();
-                String region = addresses.get(i).getAdminArea();
-
-                // Save the locality and region, and get the locations in the city (locality) and state (region)
-                if (locality != null && region != null && !localities.contains(locality + "," + region)) {
-                    Log.e("Location", locality + ", " + region);
-
-                    localities.add(locality + "," + region);
-                    getLocations(map, locality, region);
-                }
-            }
-
-        } catch (IOException ex){ Log.e("LocationError", ex.toString()); }
-    }
-    @Override
-    public boolean onMarkerClick(final Marker marker){
-        // Set bottom sheet details (marker.getSnippet() is the ID of the location object)
-        setBottomSheetDetails(ObjectManager.getLocation(marker.getSnippet()));
-
-        // Highlight selected marker (and reset all others)
-        resetMarkers();
-        marker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
-        marker.setZIndex(2.0f);
-
-        // Set bottom sheet state
-        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-        return true;
-    }
-
-    public void resetMarkers() {
-        for (Marker m : mapMarkers){
-            m.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-            m.setZIndex(1.0f);
-        }
-    }
 
     // Bottom sheet
     public void setBottomSheetDetails(Location location){
@@ -432,53 +398,64 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         // Description
         String description = location.getBreweryDescription();
-        if (description == null || description.equals("")){ bottomsheet_layout_description.setVisibility(View.GONE); }
+        if (description == null || description.equals("")) {
+            bottomsheet_layout_description.setVisibility(View.GONE);
+        }
         else { bottomsheet_description.setText(description); }
 
         // Location
         String address = String.format(getString(R.string.template_location), location.streetAddress, location.city, location.region, String.valueOf(location.postalcode));
-        if (address == null || address.equals("")){ bottomsheet_layout_location.setVisibility(View.GONE); }
+        if (address == null || address.equals("")) { bottomsheet_layout_location.setVisibility(View.GONE); }
         else { bottomsheet_location.setText(address); }
 
         // Phone
         String phone = location.phone;
-        if (phone == null || phone.equals("")){ bottomsheet_layout_phone.setVisibility(View.GONE); }
+        if (phone == null || phone.equals("")) { bottomsheet_layout_phone.setVisibility(View.GONE); }
         else { bottomsheet_phone.setText(phone); }
 
         // Website
         String website = location.getWebsite();
-        if (website == null || website.equals("")){ bottomsheet_layout_website.setVisibility(View.GONE); }
+        if (website == null || website.equals("")) { bottomsheet_layout_website.setVisibility(View.GONE); }
         else { bottomsheet_website.setText(website); }
 
         // Hours of Operation
         String hours = location.getHoursOfOperationFormatted();
-        if (hours == null || hours.equals("")){ bottomsheet_layout_hours.setVisibility(View.GONE); }
+        if (hours == null || hours.equals("")) { bottomsheet_layout_hours.setVisibility(View.GONE); }
         else { bottomsheet_hours.setText(hours); }
-
     }
 
 
-    // BreweryDB API
-    public void getLocations(final GoogleMap map, String locality, String region){
-        // Make Async API call for locations
-        AsyncRequest LocationRequest = new AsyncRequest();
-        LocationRequest.execute(HttpRequest.buildLocationUrl(this, locality, region), new CallBack(){
-            @Override public void call(String data) {
-                // Debug
-                Log.e("APP", "Completed location request - " + data);
-                //textView_debug.setText(data);
+    public void findLocationsFromCity(GoogleMap map){
 
-                // Get objects from JSON string
-                HttpRequest.formatLocationResponse(data);
+        LatLng latLong = map.getCameraPosition().target;
+        try {
+            Geocoder gcd = new Geocoder(MainActivity.this, Locale.getDefault());
 
-                // Plot locations on map
-                for (Location loc : ObjectManager.getLocations()){
-                    //Log.e("MAP", "Adding location " + loc.brewery_name + " at " + loc.latitude + "," + loc.longitude);
-                    // Add a marker and move the camera
-                    LatLng point = new LatLng(loc.latitude, loc.longitude);
-                    mapMarkers.add(map.addMarker(new MarkerOptions().position(point).title(loc.getName()).snippet(loc.id))); // Add map marker to map and to internal arraylist
-                    //map.moveCamera(CameraUpdateFactory.newLatLng(point));
+            List<Address> addresses = gcd.getFromLocation(latLong.latitude, latLong.longitude, 100);
+
+            Log.e("Location", String.valueOf(addresses.size()) + " locations");
+            int new_cities = 0;
+            for (int i = 0; i < addresses.size(); i++) {
+                String locality = addresses.get(i).getLocality();
+                String region = addresses.get(i).getAdminArea();
+
+                // Save the locality and region, and get the locations in the city (locality) and state (region)
+                if (locality != null && region != null) {
+                    Log.e("Location", locality + ", " + region);
+
+                    if (!localities.contains(locality + "," + region)) {
+                        new_cities++;
+                        Log.e("NewLocation", locality + ", " + region);
+
+                        localities.add(locality + "," + region);
+                        getLocations(locality, region);
+                    }
                 }
+            }
+
+            // Notify user nothing was found
+            if (new_cities==0){
+                Toast.makeText(MainActivity.this, getString(R.string.template_found_nothing), Toast.LENGTH_SHORT).show();
 
                 // Hide progress bar
                 progressLoading.setVisibility( View.GONE );
@@ -486,6 +463,50 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 // Enable refresh button
                 button_refresh.show();
                 refreshing_locations = false;
+            }
+
+
+        } catch (IOException ex){ Log.e("LocationError", ex.toString()); }
+    }
+
+
+    // BreweryDB API
+    public void getLocations(final String locality, String region){
+        // Make Async API call for locations
+        AsyncRequest LocationRequest = new AsyncRequest();
+        LocationRequest.execute(HttpRequest.buildLocationUrl(this, locality, region), new CallBack(){
+            @Override public void call(String data) {
+                // Get objects from JSON string
+                int found_locations = ObjectManager.countLocations();
+                ArrayList<Location> new_locations = HttpRequest.formatLocationResponse(data);
+                found_locations = ObjectManager.countLocations() - found_locations; // Take difference in locations before and after request
+
+                // Plot locations on map
+                for (Location loc : new_locations){
+                    //Log.e("MAP", "Adding location " + loc.brewery_name + " at " + loc.latitude + "," + loc.longitude);
+                    // Add a marker and move the camera
+                    LatLng point = new LatLng(loc.latitude, loc.longitude);
+                    //mapMarkers.add(map.addMarker(new MarkerOptions().position(point).title(loc.getName()).snippet(loc.id))); // Add map marker to map and to internal arraylist
+                    //map.moveCamera(CameraUpdateFactory.newLatLng(point));
+
+                    // Add marker to cluster manager
+                    clusterManager.addItem(new CustomMarker(point, loc.getName(), loc.locationTypeDisplay, loc.id));
+                }
+                clusterManager.cluster();
+
+                // Hide progress bar
+                progressLoading.setVisibility( View.GONE );
+
+                // Enable refresh button
+                button_refresh.show();
+                refreshing_locations = false;
+
+                // Notify user of found locations
+                if (found_locations > 0){
+                    Toast.makeText(MainActivity.this, String.format(getString(R.string.template_found_location), String.valueOf(found_locations), locality), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(MainActivity.this, String.format(getString(R.string.template_found_nothing_in), locality), Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -495,8 +516,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         AsyncRequest BeerRequest = new AsyncRequest();
         BeerRequest.execute(HttpRequest.buildBeerUrl(this), new CallBack(){
             @Override public void call(String data) {
-                Log.e("APP", "Completed beer request - " + data);
-
                 // Get objects from JSON string
                 HttpRequest.formatBeerResponse(data);
 

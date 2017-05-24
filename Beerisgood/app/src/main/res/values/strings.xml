@@ -92,6 +92,9 @@
     <!-- Template -->
     <string name="template_location">%1$s, %2$s, %3$s %4$s</string>
     <string name="template_type">%1$s</string>
+    <string name="template_found_location">Found %1$s locations in %2$s</string>
+    <string name="template_found_nothing_in">Nothing found in %1$s</string>
+    <string name="template_found_nothing">Nothing new found</string>
     <string name="template_opened"> • Opened %1$s</string>
     <string name="template_est"> • Brewery Est. %1$s</string>
 
