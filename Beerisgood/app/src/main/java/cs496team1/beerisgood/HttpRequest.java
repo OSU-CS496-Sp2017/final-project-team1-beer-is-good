@@ -32,7 +32,7 @@ public class HttpRequest {
         String api_beer = c.getString(R.string.brewerydb_base_beer);
         String api_additional = c.getString(R.string.brewerydb_beer_additional);
 
-        return api_base + api_beer + "?" + api_additional + api_key_param + "=" + api_key;
+        return api_base + api_beer + "?" + api_additional + String.valueOf(page) + "&" + api_key_param + "=" + api_key;
     }
 
     public static String buildLocationUrl(Context c, String locality, String region){

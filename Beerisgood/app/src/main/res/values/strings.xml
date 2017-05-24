@@ -25,7 +25,7 @@
     <string name="brewerydb_base_beer">beers</string>
     <string name="brewerydb_base_location">locations</string>
 
-    <string name="brewerydb_beer_additional">withBreweries=Y&amp;</string>
+    <string name="brewerydb_beer_additional">withBreweries=Y&amp;p=</string>
 
 
     <!-- Titles -->

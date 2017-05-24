@@ -5,6 +5,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,19 +59,32 @@ public class FragmentBeers extends Fragment {
         recyclerView_beers.setAdapter(adapter_beers);
 
 
-        /* Removed because it's not actually necessary (or is it?)
         //Hide floating action button when recyclerView is scrolled
         recyclerView_beers.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
 
-                if (dy > 10 && button_refresh.isShown()) { button_refresh.hide(); }
-                else if (dy < 0 && !button_refresh.isShown()){button_refresh.show(); }
+                // Load the next page of beers if necessary
+                if (!recyclerView_beers.canScrollVertically(1)){ // Can't scroll down anymore
+                    if (currentPage+1 < maxPages) {
+                        // Loading indicator
+                        progressLoading.setVisibility(View.VISIBLE);
+
+                        // Add a page indicator?
+
+                        // Make API request for more beer
+                        getBeers(currentPage + 1);
+                    }
+                }
+
+
+                //if (dy > 10 && button_refresh.isShown()) { button_refresh.hide(); }
+                //else if (dy < 0 && !button_refresh.isShown()){button_refresh.show(); }
             }
         });
 
-
+        /* Removed because the FAB is not actually necessary (or is it?)
         // Refresh button listener
         button_refresh.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
