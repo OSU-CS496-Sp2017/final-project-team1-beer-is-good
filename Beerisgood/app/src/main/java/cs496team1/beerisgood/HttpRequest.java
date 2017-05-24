@@ -24,7 +24,7 @@ import java.util.ArrayList;
 
 public class HttpRequest {
 
-    public static String buildBeerUrl(Context c){
+    public static String buildBeerUrl(Context c, int page){
         // Gather strings
         String api_base = c.getString(R.string.brewerydb_base_url);
         String api_key_param = c.getString(R.string.brewerydb_base_key);
@@ -65,35 +65,46 @@ public class HttpRequest {
     }
 
 
-    public static ArrayList<Beer> formatBeerResponse(String response){
-        ArrayList<Beer> beers = new ArrayList<>();
+    public static ArrayList<Integer> formatBeerResponse(String response){
+        //ArrayList<Beer> beers = new ArrayList<>();
+        int current_page = 0;
+        int max_pages = 0;
+
         try {
             // Convert to JSON
-            JSONObject jsonObj = new JSONObject(response);
+            JSONObject JSON_base = new JSONObject(response);
+
+            // Current page and number of pages
+            current_page = tryInt(getJson(JSON_base, "currentPage"));
+            max_pages = tryInt(getJson(JSON_base, "numberOfPages"));
 
             // List item of response
-            JSONArray JSON_list = getJsonArray(jsonObj, "data");
+            JSONArray JSON_list = getJsonArray(JSON_base, "data");
 
             for (int i = 0; i < JSON_list.length(); i++) {
                 // Individual list item
                 JSONObject JSON_beer_item = getJsonObj(JSON_list, i);
                 Beer beer = getBeer(JSON_beer_item);
                 ObjectManager.addBeer(beer);
-                beers.add(beer);
+                //beers.add(beer);
             }
         } catch (Exception e) {}
 
-        return beers;
+        // Return
+        ArrayList<Integer> arr = new ArrayList<>();
+        arr.add(current_page);
+        arr.add(max_pages);
+        return arr;
     }
 
     public static ArrayList<Location> formatLocationResponse(String response){
         ArrayList<Location> locations = new ArrayList<>();
         try {
             // Convert to JSON
-            JSONObject jsonObj = new JSONObject(response);
+            JSONObject JSON_base = new JSONObject(response);
 
             // List item of response
-            JSONArray JSON_list = getJsonArray(jsonObj, "data");
+            JSONArray JSON_list = getJsonArray(JSON_base, "data");
 
             for (int i = 0; i < JSON_list.length(); i++) {
                 // Individual list item
