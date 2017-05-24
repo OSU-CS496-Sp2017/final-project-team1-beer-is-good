@@ -65,91 +65,23 @@ public class HttpRequest {
     }
 
 
-    /*
-    public static ArrayList<Beer> formatBeerResponse(Context c, String response){
-        ArrayList<Beer> beers = new ArrayList<>();
-
+    public static void formatBeerResponse(String response){
         try {
             // Convert to JSON
             JSONObject jsonObj = new JSONObject(response);
 
             // List item of response
-            JSONArray JSON_list = getJsonArray(jsonObj, "list");
+            JSONArray JSON_list = getJsonArray(jsonObj, "data");
 
             for (int i = 0; i < JSON_list.length(); i++) {
-                // JSON weather Measurement
-                JSONObject JSON_wm = getJsonObj(JSON_list, i);
-
-                // Make data container
-                Beer obj = new Beer();
-
-                // Read elements from JSON
-                obj.date_forecast = tryLong(getJson(JSON_wm, "dt"));
-
-                // Main object
-                JSONObject JSON_main = getJsonObj(JSON_wm,"main");
-                obj.temp = tryFloat(getJson(JSON_main, "temp"));
-                obj.temp_min = tryFloat(getJson(JSON_main, "temp_min"));
-                obj.temp_max = tryFloat(getJson(JSON_main, "temp_max"));
-
-                obj.pressure = tryFloat(getJson(JSON_main, "pressure"));
-                obj.sea_level = tryFloat(getJson(JSON_main, "sea_level"));
-                obj.grnd_level = tryFloat(getJson(JSON_main, "grnd_level"));
-
-                obj.humidity = tryFloat(getJson(JSON_main, "humidity"));
-
-                // Weather array
-                JSONArray JSON_weather = getJsonArray(JSON_wm, "weather");
-                for (int j = 0; j < JSON_weather.length(); j++) {
-                    // JSON weather description
-                    JSONObject JSON_wd = getJsonObj(JSON_weather, j);
-
-                    // Make data container
-                    WeatherDesc wd = new WeatherDesc();
-
-                    // JSON weather Measurement
-                    wd.weather_id = tryInt(getJson(JSON_wd, "id"));
-                    wd.weather = getJson(JSON_wd, "main");
-                    wd.weather_description = getJson(JSON_wd, "description");
-                    wd.weather_icon = getJson(JSON_wd, "icon");
-
-                    obj.weather.add(wd);
-                }
-
-
-                // Clouds object
-                JSONObject JSON_clouds = getJsonObj(JSON_wm,"clouds");
-                obj.cloudiness = tryInt(getJson(JSON_clouds, "all"));
-
-                // Wind object
-                JSONObject JSON_wind = getJsonObj(JSON_wm,"wind");
-                obj.wind_speed = tryFloat(getJson(JSON_wind, "speed"));
-                obj.wind_dir = tryFloat(getJson(JSON_wind, "deg"));
-
-                // Rain object
-                JSONObject JSON_rain = getJsonObj(JSON_wm, "rain");
-                obj.rain_3h_volume = tryFloat(getJson(JSON_rain, "3h"));
-                //wm.snow_3h_volume = tryFloat((JSON_wm, "dt")); // Does not exist in JSON object?
-
-                obj.date_time_calc = getJson(JSON_wm, "dt_txt");
-
-                beers.add(obj);
+                // Individual list item
+                JSONObject JSON_beer_item = getJsonObj(JSON_list, i);
+                ObjectManager.addBeer(getBeer(JSON_beer_item));
             }
-
-        } catch (Exception e) {
-            Helper.Log(c, "JSON-Exception:", e.toString());
-            WeatherMeasurement wm = new WeatherMeasurement();
-            wm.date_time_calc = e.toString();
-            weather_measurements.clear();
-            weather_measurements.add(wm);
-        }
-
-        return weather_measurements;
+        } catch (Exception e) {}
     }
-*/
-    public static ArrayList<Location> formatLocationResponse(Context c, String response){
-        ArrayList<Location> locations = new ArrayList<>();
 
+    public static void formatLocationResponse(String response){
         try {
             // Convert to JSON
             JSONObject jsonObj = new JSONObject(response);
@@ -160,52 +92,130 @@ public class HttpRequest {
             for (int i = 0; i < JSON_list.length(); i++) {
                 // Individual list item
                 JSONObject JSON_loc_item = getJsonObj(JSON_list, i);
-
-                // Make data container
-                Location loc = new Location();
-
-                // Read elements from JSON
-                loc.id = getJson(JSON_loc_item, "id");
-                loc.name = getJson(JSON_loc_item, "name");
-                loc.streetAddress = getJson(JSON_loc_item, "streetAddress");
-                loc.city = getJson(JSON_loc_item, "locality");
-                loc.region = getJson(JSON_loc_item, "region");
-
-                loc.postalcode = tryInt(getJson(JSON_loc_item, "postalCode"));
-
-                loc.phone = getJson(JSON_loc_item, "phone");
-                loc.website = getJson(JSON_loc_item, "website").replace("\\", ""); // Remove extra '\' added by BreweryDB
-
-                loc.hoursOfOperation = getJson(JSON_loc_item, "hoursOfOperation");
-
-                loc.latitude = tryFloat(getJson(JSON_loc_item, "latitude"));
-                loc.longitude = tryFloat(getJson(JSON_loc_item, "longitude"));
-
-                loc.isPrimary = getJson(JSON_loc_item, "isPrimary");
-                loc.isClosed = getJson(JSON_loc_item, "isClosed");
-
-                loc.locationTypeDisplay = getJson(JSON_loc_item, "locationTypeDisplay");
-
-                loc.yearOpened = tryInt(getJson(JSON_loc_item, "yearOpened"));
-
-
-                // Associated brewery
-                JSONObject JSON_brewery = getJsonObj(JSON_loc_item, "brewery");
-                    loc.brewery_id = getJson(JSON_loc_item, "breweryId");
-                    loc.brewery_name = getJson(JSON_brewery, "name");
-                    loc.brewery_description = getJson(JSON_brewery, "description");
-                    loc.brewery_website = getJson(JSON_brewery, "website");
-                    loc.brewery_established = tryInt(getJson(JSON_brewery, "established"));
-                    loc.brewery_isOrganic = tryBool(getJson(JSON_brewery, "isOrganic"));
-                    loc.brewery_statusDisplay = getJson(JSON_brewery, "statusDisplay");
-
-                locations.add(loc);
+                ObjectManager.addLocation(getLocation(JSON_loc_item));
             }
 
         } catch (Exception e) {}
-
-        return locations;
     }
+
+
+    public static Location getLocation(JSONObject JSON_loc_item){
+        // Make data container
+        Location loc = new Location();
+
+        // Read elements from JSON
+        loc.id = getJson(JSON_loc_item, "id");
+        loc.name = getJson(JSON_loc_item, "name");
+        loc.streetAddress = getJson(JSON_loc_item, "streetAddress");
+        loc.city = getJson(JSON_loc_item, "locality");
+        loc.region = getJson(JSON_loc_item, "region");
+
+        loc.postalcode = tryInt(getJson(JSON_loc_item, "postalCode"));
+
+        loc.phone = getJson(JSON_loc_item, "phone");
+        loc.website = getJson(JSON_loc_item, "website").replace("\\", ""); // Remove extra '\' added by BreweryDB
+
+        loc.hoursOfOperation = getJson(JSON_loc_item, "hoursOfOperation");
+
+        loc.latitude = tryFloat(getJson(JSON_loc_item, "latitude"));
+        loc.longitude = tryFloat(getJson(JSON_loc_item, "longitude"));
+
+        loc.isPrimary = getJson(JSON_loc_item, "isPrimary");
+        loc.isClosed = getJson(JSON_loc_item, "isClosed");
+
+        loc.locationTypeDisplay = getJson(JSON_loc_item, "locationTypeDisplay");
+
+        loc.yearOpened = tryInt(getJson(JSON_loc_item, "yearOpened"));
+
+        // Associated brewery
+        JSONObject JSON_brewery = getJsonObj(JSON_loc_item, "brewery");
+        Brewery brewery = getBrewery(JSON_brewery);
+        loc.breweryID = brewery.id;
+
+        // Add brewery to objectManager
+        ObjectManager.addBrewery(brewery);
+
+        return loc;
+    }
+    public static Beer getBeer(JSONObject JSON_beer_item){
+        // Make data container
+        Beer beer = new Beer();
+
+        // Read elements from JSON
+        beer.id = getJson(JSON_beer_item, "id");
+        beer.name = getJson(JSON_beer_item, "nameDisplay");
+        beer.description = getJson(JSON_beer_item, "description");
+
+        beer.IBU = tryInt(getJson(JSON_beer_item, "ibu"));
+        beer.ABV = tryFloat(getJson(JSON_beer_item, "abv"));
+        beer.originalGravity = tryFloat(getJson(JSON_beer_item, "originalGravity"));
+        beer.isOrganic = tryBool(getJson(JSON_beer_item, "isOrganic"));
+
+        // Glass to serve it in
+        JSONObject JSON_glass = getJsonObj(JSON_beer_item, "golass");
+        beer.glass = getJson(JSON_glass, "name");
+
+
+        // Availability
+        JSONObject JSON_available = getJsonObj(JSON_beer_item, "available");
+        beer.availablility = getJson(JSON_available, "name");
+        beer.availablilityDescription = getJson(JSON_available, "description");
+
+        // Style and category
+        JSONObject JSON_style = getJsonObj(JSON_beer_item, "style");
+        JSONObject JSON_category = getJsonObj(JSON_style, "category");
+        beer.category = getJson(JSON_category, "name");
+        beer.typeName = getJson(JSON_style, "name");
+        beer.typeDescription = getJson(JSON_style, "description");
+
+        beer.servingTemperatureDisplay = getJson(JSON_beer_item, "servingTemperatureDisplay");
+
+        beer.statusDisplay = getJson(JSON_beer_item, "statusDisplay");
+
+        // Associated locations
+        JSONArray JSON_breweries = getJsonArray(JSON_beer_item, "breweries");
+
+        for (int i = 0; i < JSON_breweries.length(); i++) {
+            // Individual list item
+            JSONObject JSON_brewery = getJsonObj(JSON_breweries, i);
+
+            // Get brewery
+            Brewery brewery = getBrewery(JSON_brewery);
+            ObjectManager.addBrewery(brewery);
+
+            JSONArray JSON_locations = getJsonArray(JSON_brewery, "locations");
+            for (int j = 0; j < JSON_locations.length(); j++) {
+                // Individual list item
+                JSONObject JSON_location = getJsonObj(JSON_locations, j);
+
+                // Get location
+                Location location = getLocation(JSON_location);
+                ObjectManager.addLocation(location);
+
+                beer.locationsThatServe.add(location.id);
+            }
+
+            beer.breweriesThatBrew.add(brewery.id);
+        }
+
+        return beer;
+    }
+    public static Brewery getBrewery(JSONObject JSON_brewery_item){
+        // Make data container
+        Brewery brewery = new Brewery();
+
+        // Read elements from JSON
+        brewery.id = getJson(JSON_brewery_item, "id");
+        brewery.name = getJson(JSON_brewery_item, "name");;
+        brewery.description = getJson(JSON_brewery_item, "description");
+        brewery.website = getJson(JSON_brewery_item, "website");
+        brewery.established = tryInt(getJson(JSON_brewery_item, "established"));
+        brewery.isOrganic = tryBool(getJson(JSON_brewery_item, "isOrganic"));
+        brewery.statusDisplay = getJson(JSON_brewery_item, "statusDisplay");
+
+        return brewery;
+    }
+
 
 
 
@@ -278,6 +288,9 @@ public class HttpRequest {
         }
     }
     public static boolean tryBool(String in){
+        // Short-circuit for Y/N
+        if (in.toLowerCase().equals("y")){ return true; }
+        if (in.toLowerCase().equals("n")){ return false; }
         return Boolean.parseBoolean(in);
     }
 

@@ -31,48 +31,58 @@ public class Location {
 
     public int yearOpened;
 
-    public String statusAPI;
+    //public String statusAPI;
 
 
     // Associated Brewery
-    public String brewery_id;
-    public String brewery_name;
-    public String brewery_description;
-    public String brewery_website;
-    public int brewery_established;
-    public boolean brewery_isOrganic;
-    public String brewery_statusDisplay;
+    public String breweryID;
 
 
     // Formatting methods
-    public String getName(){
-        String[] blacklistNames = {"main brewery", "main cidery", "main meadery"};
-        if (!name.equals("")){
-            for (String item : blacklistNames) {
-                if (name.toLowerCase().contains(item)){ return brewery_name; }
+    public String getName(){ // A lot of locations are listed as "main brewery", and their associated brewery is listed as the actual location. This method switches the two names when appropriate.
+        String brewery_name;
+        Brewery b = ObjectManager.getBrewery(breweryID);
+        if (b!=null){
+            brewery_name = b.name;
+
+            if (!name.equals("")){
+                if (name.toLowerCase().contains("main")){ return brewery_name; }
             }
-            return name;
         }
-        return brewery_name;
-    }
-    public int getYearOpened(){
-        if (yearOpened != 0){
-            return yearOpened;
-        }
-        return brewery_established;
+
+        return name;
     }
     public String getHoursOfOperationFormatted(){
         return hoursOfOperation.replaceAll("\\\\r", ""); // Literally \r
     }
     public String getWebsite(){
-        if (!website.equals("")){
-            return website;
-        } else {
-            return brewery_website;
+        String brewery_website;
+        Brewery b = ObjectManager.getBrewery(breweryID);
+        if (b!=null){
+            brewery_website = b.website;
+
+            if (!brewery_website.equals("")){ return brewery_website; }
         }
+
+        return website;
     }
 
+    public String getBreweryDescription(){
+        String brewery_description;
+        Brewery b = ObjectManager.getBrewery(breweryID);
+        if (b!=null){
+            return b.description;
+        }
+        return null;
+    }
 
-    //public String icon;
-    //public String label_large;
+    public int getBreweryEstablished(){
+        int brewery_established;
+        Brewery b = ObjectManager.getBrewery(breweryID);
+        if (b!=null){
+            return b.established;
+        }
+        return 0;
+    }
+
 }

@@ -20,28 +20,16 @@ import java.util.Map;
 
 public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ForecastItemViewHolder> {
 
-    private ArrayList<Beer> mData;
-
     private Context parent;
 
     public BeerAdapter(Context c){
         parent = c;
-        mData = new ArrayList<>();
     }
 
-
-    public void addBeer(Beer beer){
-        mData.add(beer);
-        notifyItemInserted(mData.size()-1);
-    }
 
     @Override
     public int getItemCount() {
-        if (mData != null) {
-            return mData.size();
-        } else {
-            return 0;
-        }
+        return ObjectManager.countBeers();
     }
 
     @Override
@@ -53,7 +41,7 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ForecastItemVi
 
     @Override
     public void onBindViewHolder(ForecastItemViewHolder holder, int position) {
-        holder.bind(mData.get(position));
+        holder.bind(ObjectManager.getBeer(ObjectManager.getBeerKeys()[position]));
     }
 
 

@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="cs496team1.beerisgood.ActivitySettings">
+
+    <include
+        android:id="@+id/toolbar_settings"
+        layout="@layout/toolbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="false"
+        android:orientation="vertical"
+        android:theme="@style/Base.Theme.AppCompat.Light">
+
+        <LinearLayout
+            android:id="@+id/settings_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/cardview_default_margin">
+
+            <!-- Example settings card -->
+            <android.support.v7.widget.CardView
+                android:id="@+id/settingscard_example"
+                android:layout_width="match_parent"
+
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/cardview_default_margin"
+                android:layout_marginEnd="@dimen/cardview_default_margin"
+
+                android:layout_marginStart="@dimen/cardview_default_margin"
+                card_view:cardCornerRadius="@dimen/cardview_default_radius"
+                card_view:cardElevation="@dimen/cardview_default_elevation"
+                card_view:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <!-- Title -->
+                    <TextView
+                        android:id="@+id/settingscard_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/title_section_title"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/gray" />
+
+                    <!-- Settings items -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:orientation="vertical">
+
+                        <!-- Example item 1 -->
+                        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                            android:id="@+id/settingsitem_example1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/ripple_api19"
+                            android:clickable="true"
+                            android:orientation="horizontal"
+                            android:paddingBottom="20dp"
+                            android:paddingEnd="10dp"
+                            android:paddingStart="15dp"
+                            android:paddingTop="20dp">
+
+                            <ImageView
+                                android:id="@+id/settings_icon_example1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginEnd="20dp"
+                                android:src="@drawable/ic_map_marker"
+                                android:tint="@color/colorAccent" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/setting_title_example1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/placeholder_title"
+                                    android:textAppearance="?android:attr/textAppearanceSmall"
+                                    android:textColor="@color/black" />
+
+                                <TextView
+                                    android:id="@+id/setting_subtitle_example1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/placeholder_subtitle"
+                                    android:textAppearance="?android:attr/textAppearanceSmall"
+                                    android:textColor="@color/gray" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <!-- Example item 2 -->
+                        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                            android:id="@+id/settingsitem_example2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/ripple_api19"
+                            android:clickable="true"
+                            android:orientation="horizontal"
+                            android:paddingBottom="20dp"
+                            android:paddingEnd="10dp"
+                            android:paddingStart="15dp"
+                            android:paddingTop="20dp">
+
+                            <ImageView
+                                android:id="@+id/settings_icon_example2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginEnd="20dp"
+                                android:src="@drawable/ic_clock"
+                                android:tint="@color/colorAccent" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/setting_title_example2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/placeholder_title"
+                                    android:textAppearance="?android:attr/textAppearanceSmall"
+                                    android:textColor="@color/black" />
+
+                                <TextView
+                                    android:id="@+id/setting_subtitle_example2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/placeholder_subtitle"
+                                    android:textAppearance="?android:attr/textAppearanceSmall"
+                                    android:textColor="@color/gray" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>

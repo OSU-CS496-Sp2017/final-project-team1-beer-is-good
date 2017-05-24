@@ -26,14 +26,14 @@
     <string name="brewerydb_base_location">locations</string>
 
     <string name="brewerydb_beer_additional">withBreweries=Y&amp;</string>
-    <string name="brewerydb_brewery_additional">locality=corvallis&amp;region=oregon&amp;</string>
 
 
     <!-- Titles -->
     <string name="title_share">Share</string>
     <string name="title_refresh">Refresh</string>
     <string name="title_details">Details</string>
-    <string name="title_settings">Details</string>
+    <string name="title_settings">Settings</string>
+    <string name="title_section_title">Section Title</string>
     <string name="title_lastupdated">Last Updated - %1$s</string>
     <string name="title_uptodate">Up to Date</string>
     <string name="title_beer">Beer</string>

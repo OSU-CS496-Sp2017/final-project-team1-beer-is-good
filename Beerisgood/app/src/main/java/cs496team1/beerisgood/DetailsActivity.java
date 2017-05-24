@@ -22,7 +22,6 @@ public class DetailsActivity extends AppCompatActivity {
     Toolbar toolbar;
 
     TextView description;
-    TextView year;
     TextView originalGravity;
     TextView IBU;
     TextView ABV;
@@ -30,11 +29,6 @@ public class DetailsActivity extends AppCompatActivity {
     TextView isOrganic;
     ImageView label;
     TextView servingTemperatureDisplay;
-    //TextView beerVariation;
-    TextView foodPairings;
-
-
-
 
 
     @Override
@@ -54,7 +48,6 @@ public class DetailsActivity extends AppCompatActivity {
             toolbar = (Toolbar) findViewById(R.id.toolbar);
 
             description = (TextView) findViewById(R.id.details_description);
-            year = (TextView) findViewById(R.id.details_year);
             originalGravity = (TextView) findViewById(R.id.details_og);
             IBU = (TextView) findViewById(R.id.details_ibu);
             ABV = (TextView) findViewById(R.id.details_abv);
@@ -62,8 +55,6 @@ public class DetailsActivity extends AppCompatActivity {
             isOrganic = (TextView) findViewById(R.id.details_organic);
             label = (ImageView) findViewById(R.id.details_image);
             servingTemperatureDisplay = (TextView) findViewById(R.id.details_serve);
-            //beerVariation = (TextView) findViewById(R.id.details_);
-            foodPairings = (TextView) findViewById(R.id.details_foodpairings);
 
 
             //Set up toolbar
@@ -78,7 +69,6 @@ public class DetailsActivity extends AppCompatActivity {
 
             // Pull data from beer object
             description.setText(beer.description);
-            year.setText(String.valueOf(beer.year));
 
             originalGravity.setText(String.valueOf(beer.originalGravity));
             IBU.setText(String.valueOf(beer.IBU));
@@ -87,7 +77,6 @@ public class DetailsActivity extends AppCompatActivity {
             isOrganic.setText(String.valueOf(beer.isOrganic));
             //label.setImageDrawable(beer.description);
             servingTemperatureDisplay.setText(beer.servingTemperatureDisplay);
-            foodPairings.setText(beer.foodPairings);
 
 
         } else {

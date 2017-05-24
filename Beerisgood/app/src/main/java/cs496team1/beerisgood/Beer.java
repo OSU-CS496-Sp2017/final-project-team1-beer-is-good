@@ -2,6 +2,7 @@ package cs496team1.beerisgood;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Zach on 4/28/2017.
@@ -9,40 +10,40 @@ import java.util.ArrayList;
 
 public class Beer implements Serializable {
 
-    public Beer(){}
-
-    public int numberOfPages;
+    public Beer(){
+        locationsThatServe = new ArrayList<>();
+        breweriesThatBrew = new ArrayList<>();
+    }
 
     public String id;
     public String name;
     public String description;
-    public int year;
 
     public int IBU;
     public float ABV;
     public float originalGravity;
-
-    //public String glasswareId;
-    public String glass;
-
-    //styleId
-    //style
-
     public boolean isOrganic;
 
-    public String label;
+    public String glass;
+
+    //public String label;
 
     public String servingTemperatureDisplay;
 
-    //public String status;
+    public String availablility;
+    public String availablilityDescription;
+
+    public String category;
+    public String typeName;
+    public String typeDescription;
+
     public String statusDisplay;
 
-    //availableId
-    public String available;
+    //public Beer beerVariation; // (parent)
 
-    //beerVariationId
-    public Beer beerVariation; // (parent)
+    //public String foodPairings;
 
-    public String foodPairings;
+    public List<String> locationsThatServe;
+    public List<String> breweriesThatBrew;
 
 }

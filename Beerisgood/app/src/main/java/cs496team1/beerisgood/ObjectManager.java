@@ -1,57 +1,79 @@
 package cs496team1.beerisgood;
 
-import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
-/**
- * Created by Zach on 5/21/2017.
- */
 
 public class ObjectManager {
 
-    static ArrayList<Location> _locations;
-    static ArrayList<Beer> _beers;
+    private static HashMap<String, Location> _locations;
+    private static HashMap<String, Brewery> _breweries;
+    private static HashMap<String, Beer> _beers;
 
     static {
-        _locations = new ArrayList<>();
-        _beers = new ArrayList<>();
+        _locations = new HashMap<>();
+        _breweries = new HashMap<>();
+        _beers = new HashMap<>();
     }
 
 
     // Getting
-    public static ArrayList<Beer> getBeers() { return _beers; }
-    public static ArrayList<Location> getLocations() { return _locations; }
+    public static String[] getBeerKeys() { return _beers.keySet().toArray(new String[_beers.size()]); }
+    public static String[] getLocationKeys() { return _locations.keySet().toArray(new String[_locations.size()]); }
+    public static String[] getBreweryKeys() { return _breweries.keySet().toArray(new String[_breweries.size()]); }
 
-    public static Location getLocation(String id) {
-        for (int i = 0; i < countLocations(); i++){
-            if (_locations.get(i).id.equals(id)){
-                return _locations.get(i);
-            }
-        }
-        return null;
-    }
-    public static Beer getBeer(String id) {
-        for (int i = 0; i < countBeers(); i++){
-            if (_beers.get(i).id.equals(id)){
-                return _beers.get(i);
-            }
-        }
-        return null;
-    }
+    public static Collection<Beer> getBeers() { return _beers.values(); }
+    public static Collection<Location> getLocations() { return _locations.values(); }
+    public static Collection<Brewery> getBreweries() { return _breweries.values(); }
+
+    public static Location getLocation(String id) { return _locations.get(id); }
+    public static Beer getBeer(String id) { return _beers.get(id); }
+    public static Brewery getBrewery(String id) { return _breweries.get(id); }
 
     // Addition and removal
-    public static void addBeer(Beer beer){ _beers.add(beer); }
-    public static void addBeers(List<Beer> beers){ _beers.addAll(beers); }
-    public static void addLocation(Location location){ _locations.add(location); }
-    public static void addLocations(List<Location> locations){ _locations.addAll(locations); }
+    public static void addBeer(Beer beer){
+        if (!containsBeer(beer.id)) {
+            _beers.put(beer.id, beer);
+        }
+    }
+    public static void addBeers(List<Beer> beers) {
+        for (Beer b : beers)
+            addBeer(b);
+    }
+    public static void addLocation(Location location){
+        if (!containsLocation(location.id)) {
+            _locations.put(location.id, location);
+        }
+    }
+    public static void addLocations(List<Location> locations){
+        for (Location l : locations)
+            addLocation(l);
+    }
+    public static void addBrewery(Brewery brewery){
+        if (!containsBrewery(brewery.id)) {
+            _breweries.put(brewery.id, brewery);
+        }
+    }
+    public static void addBreweries(List<Brewery> breweries) {
+        for (Brewery b : breweries)
+            addBrewery(b);
+    }
 
-    public static void removeBeer(Beer beer){ _beers.remove(beer); }
-    public static void removeLocation(Location location){ _locations.remove(location); }
+    public static void removeBeer(Beer beer){ _beers.remove(beer.id); }
+    public static void removeLocation(Location location){ _locations.remove(location.id); }
+    public static void removeBrewery(Brewery brewery){ _breweries.remove(brewery.id); }
 
+    // Contains
+    public static boolean containsBeer(String id){ return getBeer(id) != null; }
+    public static boolean containsLocation(String id){ return getLocation(id) != null; }
+    public static boolean containsBrewery(String id){ return getBrewery(id) != null; }
 
     // Counts
     public static int countBeers(){ return _beers.size(); }
     public static int countLocations(){ return _locations.size(); }
+    public static int countBreweries(){ return _breweries.size(); }
 
     // Sorting and filtering
 

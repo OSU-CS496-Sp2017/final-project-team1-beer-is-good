@@ -203,7 +203,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                         break;
                     case 1: // Beers
                         refreshing_beers = true;
-                        //getBeers();
+                        getBeers();
                         break;
                 }
             }
@@ -277,6 +277,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         // Make Google Maps API call
         mapView.getMapAsync(this);
 
+        // Make BreweryDB API beers call
+        getBeers();
+
     }
 
 
@@ -288,7 +291,13 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) { //switch (item.getItemId()) {}
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.toolbar_action_settings:
+                Intent intent = new Intent(MainActivity.this, ActivitySettings.class);
+                startActivity(intent);
+                break;
+        }
         return true;
     }
 
@@ -417,12 +426,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         String subtitle = String.format(getString(R.string.template_type), location.locationTypeDisplay);
         if (location.yearOpened != 0)
             subtitle += " " + String.format(getString(R.string.template_opened), String.valueOf(location.yearOpened));
-        if (location.brewery_established != 0)
-            subtitle += " " + String.format(getString(R.string.template_est), String.valueOf(location.brewery_established));
+        if (location.getBreweryEstablished() != 0)
+            subtitle += " " + String.format(getString(R.string.template_est), String.valueOf(location.getBreweryEstablished()));
         bottomsheet_toolbar.setSubtitle(subtitle);
 
         // Description
-        String description = location.brewery_description;
+        String description = location.getBreweryDescription();
         if (description == null || description.equals("")){ bottomsheet_layout_description.setVisibility(View.GONE); }
         else { bottomsheet_description.setText(description); }
 
@@ -459,15 +468,15 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 Log.e("APP", "Completed location request - " + data);
                 //textView_debug.setText(data);
 
-                // Add to object manager
-                ObjectManager.addLocations(HttpRequest.formatLocationResponse(MainActivity.this, data));
+                // Get objects from JSON string
+                HttpRequest.formatLocationResponse(data);
 
                 // Plot locations on map
                 for (Location loc : ObjectManager.getLocations()){
                     //Log.e("MAP", "Adding location " + loc.brewery_name + " at " + loc.latitude + "," + loc.longitude);
                     // Add a marker and move the camera
                     LatLng point = new LatLng(loc.latitude, loc.longitude);
-                    mapMarkers.add(map.addMarker(new MarkerOptions().position(point).title(loc.brewery_name).snippet(loc.id))); // Add map marker to map and to internal arraylist
+                    mapMarkers.add(map.addMarker(new MarkerOptions().position(point).title(loc.getName()).snippet(loc.id))); // Add map marker to map and to internal arraylist
                     //map.moveCamera(CameraUpdateFactory.newLatLng(point));
                 }
 
@@ -487,7 +496,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         BeerRequest.execute(HttpRequest.buildBeerUrl(this), new CallBack(){
             @Override public void call(String data) {
                 Log.e("APP", "Completed beer request - " + data);
-                //addBeer();
+
+                // Get objects from JSON string
+                HttpRequest.formatBeerResponse(data);
 
                 // Hide progress bar
                 progressLoading.setVisibility(View.GONE);
@@ -495,6 +506,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 // Enable refresh button
                 button_refresh.show();
                 refreshing_beers = false;
+
+                // Refresh adapter
+                beersView.adapter_beers.notifyDataSetChanged();
             }
         });
     }

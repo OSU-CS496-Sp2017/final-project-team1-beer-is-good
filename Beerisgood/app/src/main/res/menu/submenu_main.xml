@@ -4,7 +4,7 @@
     tools:context="carvellwakeman.incomeoutcome">
 
     <!-- Settings -->
-    <item android:id="@+id/toolbar_action_share"
+    <item android:id="@+id/toolbar_action_settings"
         android:title="@string/title_settings"
         android:icon="@drawable/ic_settings"
         app:showAsAction="always"
