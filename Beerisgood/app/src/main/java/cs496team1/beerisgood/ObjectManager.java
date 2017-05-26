@@ -12,11 +12,19 @@ public class ObjectManager {
     private static HashMap<String, Brewery> _breweries;
     private static HashMap<String, Beer> _beers;
 
+    private static boolean has_loaded_location_initially = false;
+    private static boolean has_loaded_beer_initially = false;
+
     static {
         _locations = new HashMap<>();
         _breweries = new HashMap<>();
         _beers = new HashMap<>();
     }
+
+    public static void set_has_loaded_location_initially(){ has_loaded_location_initially = true; }
+    public static void set_has_loaded_beer_initially(){ has_loaded_beer_initially = true; }
+    public static boolean has_loaded_location_initially() { return has_loaded_location_initially; }
+    public static boolean has_loaded_beer_initially() { return has_loaded_beer_initially; }
 
 
     // Getting

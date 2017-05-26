@@ -29,6 +29,7 @@ import com.google.maps.android.clustering.ClusterManager;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 
@@ -210,54 +211,63 @@ public class FragmentLocations extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         _map = googleMap;
+        clusterManager = new ClusterManager<>(getActivity(), googleMap);
 
         // Request location permission
         if ( ! Helper.isPermissionGranted(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) && Build.VERSION.SDK_INT >= 23 ){
             requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         } else {
-            try {
-                // Allow the user to focus on their location
-                _map.setMyLocationEnabled(true);
+            // Check if data has been loaded (for device rotation)
+            if (!ObjectManager.has_loaded_location_initially()) {
+                ObjectManager.set_has_loaded_location_initially();
 
-                // Move camera to 'myLocation'
-                LocationManager mLocationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-                android.location.Location location = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                _map.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude())));
+                try {
+                    // Allow the user to focus on their location
+                    _map.setMyLocationEnabled(true);
 
-                // Set zoom level
-                zoomCamera(_map, 10.0f);
+                    // Move camera to 'myLocation'
+                    LocationManager mLocationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+                    android.location.Location location = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                    _map.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude())));
 
-                // Set map click listener (Hide bottom sheet)
-                _map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-                    @Override public void onMapClick(LatLng latLng) { mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN); }
-                });
+                    // Set zoom level
+                    zoomCamera(_map, 10.0f);
 
-                // Map options
-                //.setBuildingsEnabled(true);
-                //_map.setMapType(GoogleMap.MAP_TYPE_SATELLITE); // Move to settings
+                    // Set map click listener (Hide bottom sheet)
+                    _map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+                        @Override public void onMapClick(LatLng latLng) { mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN); }
+                    });
 
-                // Cluster manager
-                clusterManager = new ClusterManager<>(getActivity(), googleMap);
-                _map.setOnCameraIdleListener(clusterManager);
-                _map.setOnMarkerClickListener(clusterManager);
-                _map.setOnInfoWindowClickListener(clusterManager);
+                    // Map options
+                    //.setBuildingsEnabled(true);
+                    //_map.setMapType(GoogleMap.MAP_TYPE_SATELLITE); // Move to settings
 
-                // Set marker click listener
-                clusterManager.setOnClusterItemClickListener(new ClusterManager.OnClusterItemClickListener<CustomMarker>() {
-                    @Override
-                    public boolean onClusterItemClick(CustomMarker customMarker) {
-                        // Set bottom sheet details (marker.getSnippet() is the ID of the location object)
-                        setBottomSheetDetails(ObjectManager.getLocation(customMarker.getId()));
-                        // Set bottom sheet state
-                        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                        return false;
-                    }
-                });
+                    // Cluster manager
+                    _map.setOnCameraIdleListener(clusterManager);
+                    _map.setOnMarkerClickListener(clusterManager);
+                    _map.setOnInfoWindowClickListener(clusterManager);
 
-                // Make Async API call for locations
-                findLocationsFromCity(_map);
+                    // Set marker click listener
+                    clusterManager.setOnClusterItemClickListener(new ClusterManager.OnClusterItemClickListener<CustomMarker>() {
+                        @Override
+                        public boolean onClusterItemClick(CustomMarker customMarker) {
+                            // Set bottom sheet details (marker.getSnippet() is the ID of the location object)
+                            setBottomSheetDetails(ObjectManager.getLocation(customMarker.getId()));
+                            // Set bottom sheet state
+                            mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                            return false;
+                        }
+                    });
 
-            } catch (SecurityException e){}
+                    // Make Async API call for locations
+                    findLocationsFromCity(_map);
+
+                } catch (SecurityException e){}
+
+            } else {
+                plotLocations(ObjectManager.getLocations());
+            }
+
         }
     }
 
@@ -316,15 +326,8 @@ public class FragmentLocations extends Fragment implements OnMapReadyCallback {
                 ArrayList<Location> new_locations = HttpRequest.formatLocationResponse(data);
                 found_locations = ObjectManager.countLocations() - found_locations; // Take difference in locations before and after request
 
-                // Plot locations on map
-                for (Location loc : new_locations){
-                    // Create LatLng point from location
-                    LatLng point = new LatLng(loc.latitude, loc.longitude);
-
-                    // Add marker to cluster manager
-                    clusterManager.addItem(new CustomMarker(point, loc.getName(), loc.locationTypeDisplay, loc.id));
-                }
-                clusterManager.cluster();
+               // Plot locations
+                plotLocations(new_locations);
 
                 // Hide progress bar
                 progressLoading.setVisibility( View.GONE );
@@ -340,6 +343,18 @@ public class FragmentLocations extends Fragment implements OnMapReadyCallback {
                 }
             }
         });
+    }
+
+    public void plotLocations(Collection<Location> locations){
+        // Plot locations on map
+        for (Location loc : locations){
+            // Create LatLng point from location
+            LatLng point = new LatLng(loc.latitude, loc.longitude);
+
+            // Add marker to cluster manager
+            clusterManager.addItem(new CustomMarker(point, loc.getName(), loc.locationTypeDisplay, loc.id));
+        }
+        clusterManager.cluster();
     }
 
 
@@ -359,27 +374,42 @@ public class FragmentLocations extends Fragment implements OnMapReadyCallback {
         if (description == null || description.equals("")) {
             bottomsheet_layout_description.setVisibility(View.GONE);
         }
-        else { bottomsheet_description.setText(description); }
+        else {
+            bottomsheet_description.setText(description);
+            bottomsheet_layout_description.setVisibility(View.VISIBLE);
+        }
 
         // Location
         String address = String.format(getString(R.string.template_location), location.streetAddress, location.city, location.region, String.valueOf(location.postalcode));
         if (address == null || address.equals("")) { bottomsheet_layout_location.setVisibility(View.GONE); }
-        else { bottomsheet_location.setText(address); }
+        else {
+            bottomsheet_location.setText(address);
+            bottomsheet_layout_location.setVisibility(View.VISIBLE);
+        }
 
         // Phone
         String phone = location.phone;
         if (phone == null || phone.equals("")) { bottomsheet_layout_phone.setVisibility(View.GONE); }
-        else { bottomsheet_phone.setText(phone); }
+        else {
+            bottomsheet_phone.setText(phone);
+            bottomsheet_layout_phone.setVisibility(View.VISIBLE);
+        }
 
         // Website
         String website = location.getWebsite();
         if (website == null || website.equals("")) { bottomsheet_layout_website.setVisibility(View.GONE); }
-        else { bottomsheet_website.setText(website); }
+        else {
+            bottomsheet_website.setText(website);
+            bottomsheet_layout_website.setVisibility(View.VISIBLE);
+        }
 
         // Hours of Operation
         String hours = location.getHoursOfOperationFormatted();
         if (hours == null || hours.equals("")) { bottomsheet_layout_hours.setVisibility(View.GONE); }
-        else { bottomsheet_hours.setText(hours); }
+        else {
+            bottomsheet_hours.setText(hours);
+            bottomsheet_layout_hours.setVisibility(View.VISIBLE);
+        }
     }
 
 

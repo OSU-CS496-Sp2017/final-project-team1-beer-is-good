@@ -27,8 +27,8 @@ public class FragmentBeers extends Fragment {
 
     //FloatingActionButton button_refresh;
 
-    int currentPage = 1;
-    int maxPages = 1;
+    static int currentPage = 1;
+    static int maxPages = 1;
 
     public FragmentBeers() {}
 
@@ -37,7 +37,11 @@ public class FragmentBeers extends Fragment {
         super.onCreate(savedInstanceState);
 
         // Make BreweryDB API beers call
-        getBeers(1);
+        // Check if data has been loaded (for device rotation)
+        if (!ObjectManager.has_loaded_beer_initially()) {
+            ObjectManager.set_has_loaded_beer_initially();
+            getBeers(1);
+        }
     }
 
     @Override
