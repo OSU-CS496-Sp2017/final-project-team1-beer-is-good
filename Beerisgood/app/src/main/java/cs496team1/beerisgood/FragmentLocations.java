@@ -228,7 +228,9 @@ public class FragmentLocations extends Fragment implements OnMapReadyCallback {
                     // Move camera to 'myLocation'
                     LocationManager mLocationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
                     android.location.Location location = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                    _map.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude())));
+                    if(location!=null) {
+                        _map.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude())));
+                    }
 
                     // Set zoom level
                     zoomCamera(_map, 10.0f);

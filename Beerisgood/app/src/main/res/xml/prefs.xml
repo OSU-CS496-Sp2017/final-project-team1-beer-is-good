@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+
+    <PreferenceCategory android:title="@string/pref_in_title">
+        <CheckBoxPreference
+            android:key="@string/pref_in_abv_key"
+            android:title="@string/pref_in_abv"
+            android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="@string/pref_in_organic_key"
+            android:title="@string/pref_in_organic"
+            android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="@string/pref_in_hops_key"
+            android:title="@string/pref_in_hops"
+            android:defaultValue="false" />
+    </PreferenceCategory>
+
+</PreferenceScreen>
