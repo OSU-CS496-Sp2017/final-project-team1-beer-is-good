@@ -17,6 +17,10 @@
         <!-- You can also set colorControlNormal, colorControlActivated
              colorControlHighlight and colorSwitchThumbNormal. -->
 
+        <item name="preferenceTheme">
+            @style/PreferenceThemeOverlay.v14.Material
+        </item>
+
 
         <!--Widgets-->
 
@@ -64,7 +68,9 @@
     </style>
     <style name="SelectableItemBackground">
         <!--<item name="android:background">?attr/selectableItemBackground</item>-->
+
     </style>
+
 
 
 </resources>
