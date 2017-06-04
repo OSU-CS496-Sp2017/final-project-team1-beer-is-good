@@ -102,5 +102,33 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <!-- Intent -->
+    <!--Preferences -->
+
+        <string name="forecast_for">Forecast for</string>
+        <string name="loading_error_message">Woops.  We couldn\'t cload your forecast.  Check your internet connection and try again.</string>
+        <string name="action_share">Share forecast</string>
+        <string name="action_location">Show forecast location</string>
+        <string name="action_settings">Settings</string>
+        <string name="share_chooser_title">Pick an app to share this forecast</string>
+
+        <string name="pref_sort_key">pref_sort</string>
+        <string name="pref_sort_title">Sort by</string>
+        <string name="pref_sort_default">stars</string>
+
+        <string name="pref_language_key">pref_language</string>
+        <string name="pref_language_title">Programming language</string>
+        <string name="pref_language_default"></string>
+
+        <string name="pref_in_title">Search Based on Attributes</string>
+        <string name="pref_in_units_key">pref_in_units</string>
+        <string name="pref_in_abv">No ABV</string>
+        <string name="pref_in_abv_key">pref_in_celsius</string>
+        <string name="pref_in_organic">Organic </string>
+        <string name="pref_in_organic_key">pref_in_farenheit</string>
+        <string name="pref_in_hops">Hops</string>
+        <string name="pref_in_hops_key">pref_in_kelvin</string>
+
+        <string name="pref_user_title">Search Location</string>
+        <string name="pref_user_key">pref_user</string>
 
 </resources>
