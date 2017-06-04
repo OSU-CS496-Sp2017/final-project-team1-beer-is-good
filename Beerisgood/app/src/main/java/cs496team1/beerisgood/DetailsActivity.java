@@ -30,6 +30,15 @@ public class DetailsActivity extends AppCompatActivity {
     ImageView label;
     TextView servingTemperatureDisplay;
 
+    TextView availablility;
+    TextView availablilityDescription;
+
+    TextView category;
+    TextView typeName;
+    TextView typeDescription;
+
+    TextView statusDisplay;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +65,14 @@ public class DetailsActivity extends AppCompatActivity {
             label = (ImageView) findViewById(R.id.details_image);
             servingTemperatureDisplay = (TextView) findViewById(R.id.details_serve);
 
+            availablility = (TextView) findViewById(R.id.details_availability);
+            availablilityDescription = (TextView) findViewById(R.id.details_availabilityDescription);
+
+            category = (TextView) findViewById(R.id.details_category);
+            typeName = (TextView) findViewById(R.id.details_typeName);
+            typeDescription = (TextView) findViewById(R.id.details_typeDescription);
+
+            //statusDisplay = (TextView) findViewById(R.id.details_statusDisplay);
 
             //Set up toolbar
             toolbar.setTitle(beer.name);
@@ -77,6 +94,15 @@ public class DetailsActivity extends AppCompatActivity {
             isOrganic.setText(String.valueOf(beer.isOrganic));
             //label.setImageDrawable(beer.description);
             servingTemperatureDisplay.setText(beer.servingTemperatureDisplay);
+
+            availablility.setText(beer.availablility);
+            availablilityDescription.setText(beer.availablilityDescription);
+
+            category.setText(beer.category);
+            typeName.setText(beer.typeName);
+            typeDescription.setText(beer.typeDescription);
+
+            //statusDisplay.setText(beer.statusDisplay);
 
 
         } else {
