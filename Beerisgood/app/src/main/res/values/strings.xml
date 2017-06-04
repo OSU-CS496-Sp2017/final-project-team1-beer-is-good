@@ -55,6 +55,11 @@
     <string name="title_serveat">Serve at</string>
     <string name="title_servein">Serve in</string>
 
+    <string name="title_availability">Availability</string>
+    <string name="title_category">Category</string>
+
+
+
     <string name="title_search_area">Search this area</string>
 
 

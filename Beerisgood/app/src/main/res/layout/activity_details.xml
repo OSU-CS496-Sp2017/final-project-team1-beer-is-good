@@ -1,365 +1,584 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="cs496team1.beerisgood.DetailsActivity">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
 
-    <include layout="@layout/toolbar" />
-
-
-    <RelativeLayout
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/cardview_default_padding"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="0dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="cs496team1.beerisgood.DetailsActivity">
 
-        <!-- Beer label image -->
-        <android.support.v7.widget.CardView
-            android:id="@+id/cv_image"
+        <include layout="@layout/toolbar" />
+
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/cardview_default_margin"
-            android:layout_marginStart="@dimen/cardview_default_margin"
-            card_view:cardCornerRadius="@dimen/cardview_default_radius"
-            card_view:cardElevation="@dimen/cardview_default_elevation"
-            card_view:cardUseCompatPadding="true">
+            android:padding="@dimen/cardview_default_padding"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="0dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:background="@drawable/ripple_api19"
-                android:clickable="true"
-                android:orientation="vertical"
-                android:padding="@dimen/cardview_default_padding">
-
-                <ImageView
-                    android:id="@+id/details_image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="5dp"
-                    android:src="@drawable/img_beer_label_ex" />
-
-            </LinearLayout>
-
-        </android.support.v7.widget.CardView>
-
-        <!-- Beer description -->
-        <android.support.v7.widget.CardView
-            android:id="@+id/cv_desc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/cv_image"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="@dimen/cardview_default_margin"
-            android:layout_marginStart="@dimen/cardview_default_margin"
-            card_view:cardCornerRadius="@dimen/cardview_default_radius"
-            card_view:cardElevation="@dimen/cardview_default_elevation"
-            card_view:cardUseCompatPadding="true">
-
-            <LinearLayout
+            <!-- Beer label image -->
+            <android.support.v7.widget.CardView
+                android:id="@+id/cv_image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:clickable="true"
-                android:background="@drawable/ripple_api19"
-                android:padding="@dimen/cardview_default_padding">
+                android:layout_marginEnd="@dimen/cardview_default_margin"
+                android:layout_marginStart="@dimen/cardview_default_margin"
+                card_view:cardCornerRadius="@dimen/cardview_default_radius"
+                card_view:cardElevation="@dimen/cardview_default_elevation"
+                card_view:cardUseCompatPadding="true">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:text="@string/title_description"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                <!-- Description -->
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_height="150dp"
+                    android:background="@drawable/ripple_api19"
+                    android:clickable="true"
+                    android:orientation="vertical"
+                    android:padding="@dimen/cardview_default_padding">
 
-                    <TextView
-                        android:id="@+id/details_description"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:text="@string/title_description"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:visibility="visible" />
-                </LinearLayout>
-
-                <!-- Year -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
+                    <ImageView
+                        android:id="@+id/details_image"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="5dp"
-                        android:text="@string/title_vintage"
-                        android:textAppearance="?android:attr/textAppearanceSmall" />
-
-                    <TextView
-                        android:id="@+id/details_year"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/placeholder_number"
-                        android:textAppearance="?android:attr/textAppearanceSmall"/>
+                        android:src="@drawable/img_beer_label_ex" />
 
                 </LinearLayout>
 
-        </LinearLayout>
+            </android.support.v7.widget.CardView>
 
-        </android.support.v7.widget.CardView>
-
-        <!-- Beer IBU, ABV, OG, isOrganic -->
-        <android.support.v7.widget.CardView
-            android:id="@+id/cv_prop"
-            android:layout_below="@+id/cv_desc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="@dimen/cardview_default_margin"
-            android:layout_marginStart="@dimen/cardview_default_margin"
-            card_view:cardCornerRadius="@dimen/cardview_default_radius"
-            card_view:cardElevation="@dimen/cardview_default_elevation"
-            card_view:cardUseCompatPadding="true">
-
-            <LinearLayout
+            <!-- Beer description -->
+            <android.support.v7.widget.CardView
+                android:id="@+id/cv_desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:clickable="true"
-                android:background="@drawable/ripple_api19"
-                android:padding="@dimen/cardview_default_padding"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:text="@string/title_properties"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:layout_below="@+id/cv_image"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="@dimen/cardview_default_margin"
+                android:layout_marginStart="@dimen/cardview_default_margin"
+                card_view:cardCornerRadius="@dimen/cardview_default_radius"
+                card_view:cardElevation="@dimen/cardview_default_elevation"
+                card_view:cardUseCompatPadding="true">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="4">
+                    android:orientation="vertical"
+                    android:clickable="true"
+                    android:background="@drawable/ripple_api19"
+                    android:padding="@dimen/cardview_default_padding">
 
-                    <!-- IBU -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:text="@string/title_description"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <!-- Description -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/details_ibu"
+                            android:id="@+id/details_description"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/placeholder_number" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="5dp"
-                            android:text="@string/title_ibu" />
+                            android:layout_gravity="center_vertical"
+                            android:text="@string/title_description"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:visibility="visible" />
                     </LinearLayout>
 
-                    <!-- ABV -->
+                    <!-- Year -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/details_abv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/placeholder_number" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="5dp"
-                            android:text="@string/title_abv" />
-                    </LinearLayout>
-
-                    <!-- OG -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/details_og"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/placeholder_number" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="5dp"
-                            android:text="@string/title_og" />
-                    </LinearLayout>
-
-                    <!-- is Organic -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:orientation="horizontal">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="5dp"
-                            android:text="@string/title_organic" />
+                            android:text="@string/title_vintage"
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
 
                         <TextView
-                            android:id="@+id/details_organic"
+                            android:id="@+id/details_year"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/placeholder_boolean" />
+                            android:text="@string/placeholder_number"
+                            android:textAppearance="?android:attr/textAppearanceSmall"/>
 
                     </LinearLayout>
-
-                </LinearLayout>
 
             </LinearLayout>
 
-        </android.support.v7.widget.CardView>
+            </android.support.v7.widget.CardView>
 
-        <!-- Serving -->
-        <android.support.v7.widget.CardView
-            android:id="@+id/cv_serve"
-            android:layout_below="@+id/cv_prop"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="@dimen/cardview_default_margin"
-            android:layout_marginStart="@dimen/cardview_default_margin"
-            card_view:cardCornerRadius="@dimen/cardview_default_radius"
-            card_view:cardElevation="@dimen/cardview_default_elevation"
-            card_view:cardUseCompatPadding="true">
-
-            <LinearLayout
+            <!-- Beer IBU, ABV, OG, isOrganic -->
+            <android.support.v7.widget.CardView
+                android:id="@+id/cv_prop"
+                android:layout_below="@+id/cv_desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:clickable="true"
-                android:background="@drawable/ripple_api19"
-                android:padding="@dimen/cardview_default_padding"
-                android:orientation="vertical">
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="@dimen/cardview_default_margin"
+                android:layout_marginStart="@dimen/cardview_default_margin"
+                card_view:cardCornerRadius="@dimen/cardview_default_radius"
+                card_view:cardElevation="@dimen/cardview_default_elevation"
+                card_view:cardUseCompatPadding="true">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:text="@string/title_serving"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/gray" />
-
-                <!-- Temperature to serve -->
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:background="@drawable/ripple_api19"
+                    android:padding="@dimen/cardview_default_padding"
                     android:orientation="vertical">
 
-                    <!-- Serve at -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:text="@string/title_properties"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:weightSum="4">
 
-                        <TextView
-                            android:layout_width="wrap_content"
+                        <!-- IBU -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginEnd="5dp"
-                            android:text="@string/title_serveat"
-                            android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:textColor="@color/black" />
+                            android:layout_weight="1"
+                            android:orientation="horizontal">
 
-                        <TextView
-                            android:id="@+id/details_serve"
-                            android:layout_width="wrap_content"
+                            <TextView
+                                android:id="@+id/details_ibu"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/placeholder_number" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                android:text="@string/title_ibu" />
+                        </LinearLayout>
+
+                        <!-- ABV -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:text="@string/title_serveat"
-                            android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:textColor="@color/black" />
+                            android:layout_weight="1"
+                            android:orientation="horizontal">
 
-                    </LinearLayout>
+                            <TextView
+                                android:id="@+id/details_abv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/placeholder_number" />
 
-                    <!-- Serve with -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                android:text="@string/title_abv" />
+                        </LinearLayout>
 
-                        <TextView
-                            android:layout_width="wrap_content"
+                        <!-- OG -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginEnd="5dp"
-                            android:text="@string/title_servewith"
-                            android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:textColor="@color/black" />
+                            android:layout_weight="1"
+                            android:orientation="horizontal">
 
-                        <TextView
-                            android:id="@+id/details_foodpairings"
-                            android:layout_width="wrap_content"
+                            <TextView
+                                android:id="@+id/details_og"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/placeholder_number" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                android:text="@string/title_og" />
+                        </LinearLayout>
+
+                        <!-- is Organic -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:text="@string/title_foodpairing"
-                            android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:textColor="@color/black" />
+                            android:layout_weight="1"
+                            android:orientation="horizontal">
 
-                    </LinearLayout>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="5dp"
+                                android:text="@string/title_organic" />
 
-                    <!-- Serve in -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                            <TextView
+                                android:id="@+id/details_organic"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/placeholder_boolean" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginEnd="5dp"
-                            android:text="@string/title_servein"
-                            android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:textColor="@color/black" />
-
-                        <TextView
-                            android:id="@+id/details_glass"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:text="@string/title_glasstype"
-                            android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:textColor="@color/black" />
+                        </LinearLayout>
 
                     </LinearLayout>
 
                 </LinearLayout>
 
-        </LinearLayout>
+            </android.support.v7.widget.CardView>
 
-        </android.support.v7.widget.CardView>
+            <!-- Serving -->
+            <android.support.v7.widget.CardView
+                android:id="@+id/cv_serve"
+                android:layout_below="@+id/cv_prop"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="@dimen/cardview_default_margin"
+                android:layout_marginStart="@dimen/cardview_default_margin"
+                card_view:cardCornerRadius="@dimen/cardview_default_radius"
+                card_view:cardElevation="@dimen/cardview_default_elevation"
+                card_view:cardUseCompatPadding="true">
 
-    </RelativeLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:background="@drawable/ripple_api19"
+                    android:padding="@dimen/cardview_default_padding"
+                    android:orientation="vertical">
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:text="@string/title_serving"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/gray" />
 
-</LinearLayout>
+                    <!-- Temperature to serve -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <!-- Serve at -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginEnd="5dp"
+                                android:text="@string/title_serveat"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textColor="@color/black" />
+
+                            <TextView
+                                android:id="@+id/details_serve"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:text="@string/title_serveat"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textColor="@color/black" />
+
+                        </LinearLayout>
+
+                        <!-- Serve with -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginEnd="5dp"
+                                android:text="@string/title_servewith"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textColor="@color/black" />
+
+                            <TextView
+                                android:id="@+id/details_foodpairings"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:text="@string/title_foodpairing"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textColor="@color/black" />
+
+                        </LinearLayout>
+
+                        <!-- Serve in -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginEnd="5dp"
+                                android:text="@string/title_servein"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textColor="@color/black" />
+
+                            <TextView
+                                android:id="@+id/details_glass"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:text="@string/title_glasstype"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textColor="@color/black" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <!-- Availability -->
+            <android.support.v7.widget.CardView
+                android:id="@+id/cv_availability"
+                android:layout_below="@+id/cv_serve"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="@dimen/cardview_default_margin"
+                android:layout_marginStart="@dimen/cardview_default_margin"
+                card_view:cardCornerRadius="@dimen/cardview_default_radius"
+                card_view:cardElevation="@dimen/cardview_default_elevation"
+                card_view:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:background="@drawable/ripple_api19"
+                    android:padding="@dimen/cardview_default_padding"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:text="@string/title_availability"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/gray" />
+
+                    <!-- Availability -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <!-- Availability -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginEnd="5dp"
+                                android:text="When:"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textColor="@color/black" />
+
+                            <TextView
+                                android:id="@+id/details_availability"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:text="When:"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textColor="@color/black" />
+
+                        </LinearLayout>
+
+                        <!-- Availability Description -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginEnd="5dp"
+                                android:text="Description:"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textColor="@color/black" />
+
+                            <TextView
+                                android:id="@+id/details_availabilityDescription"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:text="Description:"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textColor="@color/black" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <!-- Category -->
+            <android.support.v7.widget.CardView
+                android:id="@+id/cv_category"
+                android:layout_below="@+id/cv_availability"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="@dimen/cardview_default_margin"
+                android:layout_marginStart="@dimen/cardview_default_margin"
+                card_view:cardCornerRadius="@dimen/cardview_default_radius"
+                card_view:cardElevation="@dimen/cardview_default_elevation"
+                card_view:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:background="@drawable/ripple_api19"
+                    android:padding="@dimen/cardview_default_padding"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:text="@string/title_category"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/gray" />
+
+                    <!-- Category -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <!-- Category -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginEnd="5dp"
+                                android:text="Category:"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textColor="@color/black" />
+
+                            <TextView
+                                android:id="@+id/details_category"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:text="Category"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textColor="@color/black" />
+
+                        </LinearLayout>
+
+                        <!-- Type Name -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginEnd="5dp"
+                                android:text="Name:"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textColor="@color/black" />
+
+                            <TextView
+                                android:id="@+id/details_typeName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:text="Name:"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textColor="@color/black" />
+
+                        </LinearLayout>
+
+                        <!-- Type Description -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginEnd="5dp"
+                                android:text="Description:"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textColor="@color/black" />
+
+                            <TextView
+                                android:id="@+id/details_typeDescription"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:text="Description:"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textColor="@color/black" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</ScrollView>
