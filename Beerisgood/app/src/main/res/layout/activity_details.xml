@@ -504,7 +504,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginEnd="5dp"
-                                android:text="Category:"
+                                android:text="Type:"
                                 android:textAppearance="?android:attr/textAppearanceSmall"
                                 android:textColor="@color/black" />
 
@@ -513,7 +513,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:text="Category"
+                                android:text="Type"
                                 android:textAppearance="?android:attr/textAppearanceSmall"
                                 android:textColor="@color/black" />
 
@@ -552,20 +552,11 @@
                             android:orientation="horizontal">
 
                             <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginEnd="5dp"
-                                android:text="Description:"
-                                android:textAppearance="?android:attr/textAppearanceSmall"
-                                android:textColor="@color/black" />
-
-                            <TextView
                                 android:id="@+id/details_typeDescription"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:text="Description:"
+                                android:text="Description"
                                 android:textAppearance="?android:attr/textAppearanceSmall"
                                 android:textColor="@color/black" />
 
