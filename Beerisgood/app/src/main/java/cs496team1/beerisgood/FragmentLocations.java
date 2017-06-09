@@ -217,58 +217,56 @@ public class FragmentLocations extends Fragment implements OnMapReadyCallback {
         if ( ! Helper.isPermissionGranted(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) && Build.VERSION.SDK_INT >= 23 ){
             requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         } else {
-            // Check if data has been loaded (for device rotation)
-            if (!ObjectManager.has_loaded_location_initially()) {
-                ObjectManager.set_has_loaded_location_initially();
+            try {
+                // Allow the user to focus on their location
+                _map.setMyLocationEnabled(true);
 
-                try {
-                    // Allow the user to focus on their location
-                    _map.setMyLocationEnabled(true);
+                // Move camera to 'myLocation'
+                LocationManager mLocationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+                android.location.Location location = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                if(location!=null) {
+                    _map.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude())));
+                }
 
-                    // Move camera to 'myLocation'
-                    LocationManager mLocationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-                    android.location.Location location = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                    if(location!=null) {
-                        _map.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude())));
+                // Set zoom level
+                zoomCamera(_map, 10.0f);
+
+                // Set map click listener (Hide bottom sheet)
+                _map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+                    @Override public void onMapClick(LatLng latLng) { mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN); }
+                });
+
+                // Map options
+                //.setBuildingsEnabled(true);
+                //_map.setMapType(GoogleMap.MAP_TYPE_SATELLITE); // Move to settings
+
+                // Cluster manager
+                _map.setOnCameraIdleListener(clusterManager);
+                _map.setOnMarkerClickListener(clusterManager);
+                _map.setOnInfoWindowClickListener(clusterManager);
+
+                // Set marker click listener
+                clusterManager.setOnClusterItemClickListener(new ClusterManager.OnClusterItemClickListener<CustomMarker>() {
+                    @Override
+                    public boolean onClusterItemClick(CustomMarker customMarker) {
+                        // Set bottom sheet details (marker.getSnippet() is the ID of the location object)
+                        setBottomSheetDetails(ObjectManager.getLocation(customMarker.getId()));
+                        // Set bottom sheet state
+                        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                        return false;
                     }
+                });
 
-                    // Set zoom level
-                    zoomCamera(_map, 10.0f);
-
-                    // Set map click listener (Hide bottom sheet)
-                    _map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-                        @Override public void onMapClick(LatLng latLng) { mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN); }
-                    });
-
-                    // Map options
-                    //.setBuildingsEnabled(true);
-                    //_map.setMapType(GoogleMap.MAP_TYPE_SATELLITE); // Move to settings
-
-                    // Cluster manager
-                    _map.setOnCameraIdleListener(clusterManager);
-                    _map.setOnMarkerClickListener(clusterManager);
-                    _map.setOnInfoWindowClickListener(clusterManager);
-
-                    // Set marker click listener
-                    clusterManager.setOnClusterItemClickListener(new ClusterManager.OnClusterItemClickListener<CustomMarker>() {
-                        @Override
-                        public boolean onClusterItemClick(CustomMarker customMarker) {
-                            // Set bottom sheet details (marker.getSnippet() is the ID of the location object)
-                            setBottomSheetDetails(ObjectManager.getLocation(customMarker.getId()));
-                            // Set bottom sheet state
-                            mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                            return false;
-                        }
-                    });
-
+                // Check if data has been loaded (for device rotation)
+                if (!ObjectManager.has_loaded_location_initially()) {
+                    ObjectManager.set_has_loaded_location_initially();
                     // Make Async API call for locations
                     findLocationsFromCity(_map);
+                } else {
+                    plotLocations(ObjectManager.getLocations());
+                }
 
-                } catch (SecurityException e){}
-
-            } else {
-                plotLocations(ObjectManager.getLocations());
-            }
+            } catch (SecurityException e){}
 
         }
     }
